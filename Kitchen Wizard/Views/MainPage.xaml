@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Kitchen_Wizard.Views.MainPage"
+             Title="Kitchen Wizard">
+    <VerticalStackLayout>
+        <Label 
+            Text="Welcome to Kitchen Wizard! Click the icon in the top-left corner to navigate (buttons coming later, or this page may disappear and the app opens to the search page instead)"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center" />
+        <!--<Button
+            Text="Favorites and History"
+            Clicked="GoToFavoritesHistory"/>-->
+        
+    </VerticalStackLayout>
+</ContentPage>

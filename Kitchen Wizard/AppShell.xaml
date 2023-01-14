@@ -4,11 +4,29 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:Kitchen_Wizard"
-    Shell.FlyoutBehavior="Disabled">
+    xmlns:views="clr-namespace:Kitchen_Wizard.Views"
+    Shell.FlyoutBehavior="Flyout"
+    >
 
     <ShellContent
         Title="Home"
-        ContentTemplate="{DataTemplate local:MainPage}"
+        ContentTemplate="{DataTemplate views:MainPage}"
         Route="MainPage" />
+    <ShellContent
+        Title="Favorites and History"
+        ContentTemplate="{DataTemplate views:FavoritesAndHistoryPage}"
+        Route="FavoritesAndHistoryPage"/>
+    <ShellContent
+        Title="Search"
+        ContentTemplate="{DataTemplate views:RecipeSearchPage}"
+        Route="RecipeSearchPage" />
+    <ShellContent
+        Title="Food List"
+        ContentTemplate="{DataTemplate views:FoodListPage}"
+        Route="FoodListPage" />
+    <ShellContent
+        Title="Preferences"
+        ContentTemplate="{DataTemplate views:SettingsPage}"
+        Route="SettingsPage" />
 
 </Shell>
