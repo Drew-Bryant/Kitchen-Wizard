@@ -10,13 +10,18 @@ namespace Kitchen_Wizard.Data_Objects.Database_Helpers
 {
     public class StaticSearchHelper : ISearchHelper
     {
-        public ObservableCollection<Recipe> SearchRecipeByKeyword(string keyword, UserPreferences prefs)
+        public async Task<List<Recipe>> SearchRecipeByKeyword(string keyword, UserPreferences prefs)
         {
-            ObservableCollection<Recipe> recipes = new ObservableCollection<Recipe>();
+
+            Random random = new Random(Guid.NewGuid().GetHashCode());
+            
+            List<Recipe> recipes = new();
             for(int ii = 0; ii < 10; ii++)
             {
                 Recipe recipe = new Recipe();
-                recipe.Name = "Recipe number" + (ii + 1);
+                int next = random.Next(25);
+                recipe.Name = "Recipe number" + (next);
+                recipe.ID = next;
                 recipes.Add(recipe);
             }
 

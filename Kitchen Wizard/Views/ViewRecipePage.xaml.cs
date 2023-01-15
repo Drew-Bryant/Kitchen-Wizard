@@ -1,37 +1,14 @@
+using Kitchen_Wizard.Models;
+
 namespace Kitchen_Wizard.Views;
 
 public partial class ViewRecipePage : ContentPage
 {
-	public ViewRecipePage()
+	public ViewRecipePage(ViewRecipePageModel viewModel)
 	{
         InitializeComponent();
 
-        BindingContext = new Models.ViewRecipePageModel();
+        BindingContext = viewModel;
     }
 
-    //protected override void OnAppearing()
-    //{
-    //    ((Models.ViewRecipeModel)BindingContext).LoadNotes();
-    //}
-
-    //private async void Add_Clicked(object sender, EventArgs e)
-    //{
-    //    await Shell.Current.GoToAsync(nameof(FavoritesAndHistoryPage));
-    //}
-
-    //useful for figuring out how to get the item selected from a list
-    //private async void notesCollection_SelectionChanged(object sender, SelectionChangedEventArgs e)
-    //{
-    //    if (e.CurrentSelection.Count != 0)
-    //    {
-    //        // Get the note model
-    //        var note = (Models.FavoritesAndHistoryPageModel)e.CurrentSelection[0];
-
-    //        // Should navigate to "NotePage?ItemId=path\on\device\XYZ.notes.txt"
-    //        await Shell.Current.GoToAsync($"{nameof(FavoritesAndHistoryPage)}?{nameof(FavoritesAndHistoryPage.ItemId)}={note.Filename}");
-
-    //        // Unselect the UI
-    //        notesCollection.SelectedItem = null;
-    //    }
-    //}
 }

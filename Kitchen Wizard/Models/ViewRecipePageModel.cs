@@ -1,5 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using Kitchen_Wizard.Data_Objects;
+using Kitchen_Wizard.Data_Objects.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -10,17 +12,33 @@ using System.Threading.Tasks;
 
 namespace Kitchen_Wizard.Models
 {
-    public partial class ViewRecipePageModel : ObservableObject
+    [QueryProperty(nameof(Recipe), "Recipe")]
+    public partial class ViewRecipePageModel : IKitchenWizardViewModel
     {
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public List<Ingredient> Ingredients { get; set; }
-        public List<string> Steps { get; set; }
-        public string Author { get; set; }
-        public string Source { get; set; }
-        public int Servings { get; set; }
-        public bool IsFavorite { get; set; }
-        public bool IsHistory { get; set; }
-        public int ID { get; set; }
+
+        private IFavoritesHelper favoritesHelper;
+        private IHistoryHelper historyHelper;
+
+        public ViewRecipePageModel(IFavoritesHelper _favHelper, IHistoryHelper _historyHelper)
+        {
+            favoritesHelper = _favHelper;
+            historyHelper = _historyHelper;
+        }
+
+        [ObservableProperty]
+        Recipe recipe;
+
+        [RelayCommand]
+        async void AddToFavorites()
+        { 
+            favoritesHelper.Add(Recipe);
+        }
+
+        [RelayCommand]
+        void AddToHistory()
+        {
+            historyHelper.Add(Recipe);
+        }
+
     }
 }

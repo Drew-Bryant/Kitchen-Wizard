@@ -2,32 +2,42 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Kitchen_Wizard.Views.ViewRecipePage"
-             Title="Your Notes">
+             xmlns:viewmodel="clr-namespace:Kitchen_Wizard.Models"
+             xmlns:object="clr-namespace:Kitchen_Wizard.Data_Objects" 
+             x:DataType="viewmodel:ViewRecipePageModel"
+             Title="{Binding Recipe.Name}">
     <!-- Add an item to the toolbar -->
     <ContentPage.ToolbarItems>
+        <!--ToolbarItem for opening ingredients flyout, or swipe gesture-->
         <!--<ToolbarItem Text="Add" Clicked="Add_Clicked" IconImageSource="{FontImage Glyph='+', Color=White, Size=22}" />-->
     </ContentPage.ToolbarItems>
 
-    <!-- Display notes in a list --><!--
-    <CollectionView x:Name="notesCollection"
-                        ItemsSource="{Binding Notes}"
-                        Margin="20"
-                        SelectionMode="Single"
-                        SelectionChanged="notesCollection_SelectionChanged">
+    <VerticalStackLayout>
+        <Grid RowDefinitions="Auto, *"
+                ColumnDefinitions=".4*, .2*, .4*"
+              RowSpacing="10">
+            <Button Text="Add to Favorites"
+                    Command="{Binding AddToFavoritesCommand}"
 
-        --><!-- Designate how the collection of items are laid out --><!--
-        <CollectionView.ItemsLayout>
-            <LinearItemsLayout Orientation="Vertical" ItemSpacing="10" />
-        </CollectionView.ItemsLayout>
+                    Margin="10"
+                    Grid.Column="0"
+                    Grid.Row="0"/>
+            <Button Text="Make This Recipe"
+                    Command="{Binding AddToHistoryCommand}"
+                    Margin="10"
+                    Grid.Column="2"
+                    Grid.Row="0"/>
+        </Grid>
+        <ScrollView VerticalOptions="FillAndExpand">
+            <VerticalStackLayout>
+                <Label Text="{Binding Recipe.ID, StringFormat='Recipe Number: {0}'}"/>
+                <Label Text="{Binding Recipe.Description}"/>
+                <Label Text="rawr" FontSize="599"/>
+            </VerticalStackLayout>
+        </ScrollView>
 
-        --><!-- Define the appearance of each item in the list --><!--
-        <CollectionView.ItemTemplate>
-            <DataTemplate>
-                <StackLayout>
-                    <Label Text="{Binding Text}" FontSize="22"/>
-                    <Label Text="{Binding Date}" FontSize="14" TextColor="Silver"/>
-                </StackLayout>
-            </DataTemplate>
-        </CollectionView.ItemTemplate>
-    </CollectionView>-->
+
+    </VerticalStackLayout>
+
+
 </ContentPage>

@@ -5,9 +5,9 @@
              xmlns:viewmodel="clr-namespace:Kitchen_Wizard.Models"
              xmlns:object="clr-namespace:Kitchen_Wizard.Data_Objects" 
              x:DataType="viewmodel:RecipeSearchPageModel"
-             Title="Recipe Search">
+             Title="{Binding Title}">
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Customize" Clicked="SearchOptions_Clicked" IconImageSource="{FontImage Glyph='+', Color=White, Size=22}" />
+        <ToolbarItem Text="Customize" Clicked="SearchOptionsClicked" IconImageSource="{FontImage Glyph='+', Color=White, Size=22}" />
     </ContentPage.ToolbarItems>
     <Grid RowDefinitions="Auto, *"
           ColumnDefinitions=".75*, .25*"
@@ -16,11 +16,11 @@
           Padding="10">
         <Entry x:Name="SearchField"
                Text="{Binding SearchField}"
-               Placeholder="Click here to search"
-               Keyboard="Text"
+               Placeholder="Click here to search"              
                Grid.Row="0"/>
-        
+
         <Button Text="Search"
+                IsEnabled="{Binding NotLoadingData}"
                 Command="{Binding KeywordSearchCommand}"
                 CommandParameter="{Binding SearchField}"
                 Grid.Row="0"
@@ -42,11 +42,21 @@
                 <DataTemplate x:DataType="{x:Type object:Recipe}">
                     <Grid>
                         <Frame>
-                            <Button Text="{Binding Name}" FontSize="22"/>
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="SearchResultTapped"/>
+                            </Frame.GestureRecognizers>
+                            <Label Text="{Binding Name}" FontSize="12"/>
                         </Frame>
                     </Grid>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
+
+        <ActivityIndicator IsVisible="{Binding LoadingData}"
+                           IsRunning="{Binding LoadingData}"
+                           HorizontalOptions="FillAndExpand"
+                           VerticalOptions="CenterAndExpand"
+                           Grid.RowSpan="2"
+                           Grid.ColumnSpan="2"/>
     </Grid>
 </ContentPage>

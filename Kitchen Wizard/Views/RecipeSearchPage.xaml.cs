@@ -8,21 +8,39 @@ namespace Kitchen_Wizard.Views;
 public partial class RecipeSearchPage : ContentPage
 {
 
-	private ISearchHelper searchHelper;
-	private IFoodListHelper foodListHelper;
-	private IHistoryHelper historyHelper;
-	private IFavoritesHelper favoritesHelper;
 	private IRecipeHelper recipeHelper;
-	private IUserPreferences userPrefs;
-	public RecipeSearchPage(RecipeSearchPageModel viewModel)
-	{
-		InitializeComponent();
 
-		BindingContext = viewModel;
+	public RecipeSearchPage(RecipeSearchPageModel viewModel, IRecipeHelper helper)
+	{
+        InitializeComponent();
+
+        BindingContext = viewModel;
+		recipeHelper = helper;
 	}
 
-	private void SearchOptions_Clicked(object sender, EventArgs e)
+
+    private void SearchOptionsClicked(object sender, EventArgs e)
+    {
+
+    }
+
+    private async void SearchResultTapped(object sender, EventArgs e)
 	{
-		//NOT IMPLEMENTED - PROBABLY B level
+		Recipe recipe = ((VisualElement)sender).BindingContext as Recipe;
+
+
+		//should never happen...sanity check
+		if (recipe == null)
+			return;
+
+		recipe = recipeHelper.GetFullByID(recipe.ID);
+
+		await Shell.Current.GoToAsync(nameof(ViewRecipePage), true, new Dictionary<string, object>
+		{
+			{"Recipe", recipe}
+		});
+
+		
 	}
+
 }

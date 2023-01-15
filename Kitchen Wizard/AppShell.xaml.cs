@@ -5,7 +5,8 @@ public partial class AppShell : Shell
 	public AppShell()
 	{
 		InitializeComponent();
-        Routing.RegisterRoute(nameof(Views.FavoritesAndHistoryPage), typeof(Views.FavoritesAndHistoryPage));
+
+        Routing.RegisterRoute(nameof(Views.ViewRecipePage), typeof(Views.ViewRecipePage));
 
     }
 }

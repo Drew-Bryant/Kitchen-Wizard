@@ -1,6 +1,7 @@
 ﻿using Kitchen_Wizard.Data_Objects;
 using Kitchen_Wizard.Data_Objects.Database_Helpers;
 using Kitchen_Wizard.Data_Objects.Interfaces;
+using Kitchen_Wizard.Data_Objects.Static_Helpers;
 using Kitchen_Wizard.Models;
 using Kitchen_Wizard.Views;
 
@@ -23,15 +24,27 @@ public static class MauiProgram
         builder.Services.AddTransient<IFavoritesHelper, FavoritesDBHelper>();
         builder.Services.AddTransient<IFoodListHelper, FoodListDBHelper>();
         builder.Services.AddTransient<IHistoryHelper, HistoryDBHelper>();
-        builder.Services.AddTransient<IRecipeHelper, RecipeDBHelper>();
-        builder.Services.AddTransient<ISearchHelper, StaticSearchHelper>();
+        //builder.Services.AddTransient<IRecipeHelper, RecipeDBHelper>();
+        //builder.Services.AddTransient<ISearchHelper, SearchDBHelper>();
         builder.Services.AddTransient<IUserPreferences, UserPreferences>();
 
-		//register views for dependency injection
-        builder.Services.AddSingleton<RecipeSearchPage>();
+
+		//static helpers(for now)
+        builder.Services.AddTransient<ISearchHelper, StaticSearchHelper>();
+        builder.Services.AddTransient<IRecipeHelper, StaticRecipeHelper>();
+
+
+
+
+        //NOTE: SINGLETON MAY NOT BE THE RIGHT THING FOR VIEWS AND MODELS
+
+        //register views for dependency injection
+        builder.Services.AddTransient<RecipeSearchPage>();
+		builder.Services.AddSingleton<ViewRecipePage>();
 
 		//register viewmodels for data binding
-		builder.Services.AddSingleton<RecipeSearchPageModel>();
+		builder.Services.AddTransient<RecipeSearchPageModel>();
+		builder.Services.AddSingleton<ViewRecipePageModel>();
 
 
         return builder.Build();

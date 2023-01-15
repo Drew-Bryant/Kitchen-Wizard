@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Kitchen_Wizard.Models
 {
-    public partial class RecipeSearchPageModel : ObservableObject
+    public partial class RecipeSearchPageModel : IKitchenWizardViewModel
     {
         private ISearchHelper searchHelper;
         private IFoodListHelper foodListHelper;
@@ -21,7 +21,8 @@ namespace Kitchen_Wizard.Models
         private IUserPreferences userPrefs;
 
         public UserPreferences SearchOptions { get; set; }
-        public ObservableCollection<Recipe> searchResults { get; set; } = new ObservableCollection<Recipe>();
+
+        public ObservableCollection<Recipe> SearchResults { get; set; } = new();
 
         [ObservableProperty]
         string searchField;
@@ -35,34 +36,23 @@ namespace Kitchen_Wizard.Models
             favoritesHelper = _favoritesHelper;
             recipeHelper = _recipeHelper;
             userPrefs = _userPrefs;
-        }
 
-        private void SearchButton_Clicked(object sender, EventArgs e)
-        {
-            //TODO:
-            //ObservableCollection<Recipe> results = (IEnumerable<Recipe>)searchHelper.SearchRecipeByKeyword(SearchField.Text, (UserPreferences)userPrefs);
-            //SearchResults = results;
-            //with the results, build a collection view and add all of the recipes to it
+            Title = "Search";
 
-            //CollectionView collectionView = new CollectionView
-            //{
-            //    IsGrouped = true
-            //};
-            //collectionView.SetBinding(ItemsView.ItemsSourceProperty, "Animals");
-
-            //start with just a static search class that always returns the same thing
-
-            //then work on displaying the recipe view. 
-            //bare bones at first, just show the recipe name, no ingredients slideout or anything
-            //just add the favorites functionality and add it and get it to show up in local storage
-            //then go to favorites page and display the list.
         }
 
         [RelayCommand]
-        void KeywordSearch(string keyword)
+        async Task KeywordSearch(string keyword)
         {
+            SearchResults.Clear();
             //do the search here
-            SearchResults = searchHelper.SearchRecipeByKeyword(keyword, (UserPreferences)userPrefs);
+
+            var results = await searchHelper.SearchRecipeByKeyword(keyword, (UserPreferences)userPrefs);
+
+            foreach(var recipe in results)
+            {
+                SearchResults.Add(recipe);
+            }
         }
 
     }

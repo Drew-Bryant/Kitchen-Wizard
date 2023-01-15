@@ -5,9 +5,15 @@
              Title="Kitchen Wizard">
     <VerticalStackLayout>
         <Label 
-            Text="Welcome to Kitchen Wizard! Click the icon in the top-left corner to navigate (buttons coming later, or this page may disappear and the app opens to the search page instead)"
+            Text="Welcome to Kitchen Wizard!"
             VerticalOptions="Center" 
-            HorizontalOptions="Center" />
+            HorizontalOptions="Center"
+            FontSize="20"/>
+        <Label
+            Text="Click the menu icon to get started!"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center"
+            FontSize="20"/>
         <!--<Button
             Text="Favorites and History"
             Clicked="GoToFavoritesHistory"/>-->

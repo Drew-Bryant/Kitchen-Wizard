@@ -5,11 +5,11 @@ public partial class MainPage : ContentPage
 	public MainPage()
 	{
 		InitializeComponent();
-        DeviceDisplay.KeepScreenOn = true;
+
+        if (DeviceInfo.Current.Platform == DevicePlatform.Android)
+        {
+            DeviceDisplay.KeepScreenOn = true;
+        }
     }
 
-    private async void GoToFavoritesHistory(object sender, EventArgs e)
-	{
-        await Shell.Current.GoToAsync(nameof(FavoritesAndHistoryPage));
-    }
 }

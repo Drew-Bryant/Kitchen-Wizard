@@ -29,4 +29,12 @@
         ContentTemplate="{DataTemplate views:SettingsPage}"
         Route="SettingsPage" />
 
+    
+    
+    <!--Doesn't seem to work for some reason but this can be used to create icons at the bottom of the screen
+    <TabBar>
+        <Tab Title="Home">
+            <ShellContent ContentTemplate="{DataTemplate views:MainPage}" Route="MainPage"/>
+        </Tab> 
+    </TabBar>-->
 </Shell>
