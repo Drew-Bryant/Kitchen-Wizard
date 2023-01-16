@@ -4,6 +4,7 @@
              x:Class="Kitchen_Wizard.Views.FavoritesAndHistoryPage"
              xmlns:view="clr-namespace:Kitchen_Wizard.Views"
              xmlns:tab="clr-namespace:Kitchen_Wizard.Views.Embedded_Views"
+             xmlns:tabs="http://sharpnado.com"
              xmlns:viewmodel="clr-namespace:Kitchen_Wizard.Models"
              x:DataType="viewmodel:FavoritesAndHistoryPageModel"
              Title="{Binding Title}">

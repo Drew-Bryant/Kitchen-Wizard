@@ -1,4 +1,3 @@
-//using static Android.Content.ClipData;
 namespace Kitchen_Wizard.Views;
 //[QueryProperty(nameof(ItemId), nameof(ItemId))]
 public partial class FavoritesAndHistoryPage : ContentPage

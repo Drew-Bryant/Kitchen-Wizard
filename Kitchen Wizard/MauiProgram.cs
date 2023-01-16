@@ -4,6 +4,8 @@ using Kitchen_Wizard.Data_Objects.Interfaces;
 using Kitchen_Wizard.Data_Objects.Static_Helpers;
 using Kitchen_Wizard.Models;
 using Kitchen_Wizard.Views;
+using Kitchen_Wizard.Views.Embedded_Views;
+using Sharpnado.Tabs;
 
 namespace Kitchen_Wizard;
 
@@ -14,6 +16,7 @@ public static class MauiProgram
 		var builder = MauiApp.CreateBuilder();
 		builder
 			.UseMauiApp<App>()
+			.UseSharpnadoTabs(loggerEnable: false)
 			.ConfigureFonts(fonts =>
 			{
 				fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
@@ -21,9 +24,7 @@ public static class MauiProgram
 			});
 
 		//register dependency injection services
-        builder.Services.AddTransient<IFavoritesHelper, FavoritesDBHelper>();
         builder.Services.AddTransient<IFoodListHelper, FoodListDBHelper>();
-        builder.Services.AddTransient<IHistoryHelper, HistoryDBHelper>();
         //builder.Services.AddTransient<IRecipeHelper, RecipeDBHelper>();
         //builder.Services.AddTransient<ISearchHelper, SearchDBHelper>();
         builder.Services.AddTransient<IUserPreferences, UserPreferences>();
@@ -36,16 +37,19 @@ public static class MauiProgram
 
 
 
-        //NOTE: SINGLETON MAY NOT BE THE RIGHT THING FOR VIEWS AND MODELS
 
         //register views for dependency injection
         builder.Services.AddTransient<RecipeSearchPage>();
-		builder.Services.AddSingleton<ViewRecipePage>();
+		builder.Services.AddTransient<ViewRecipePage>();
+        builder.Services.AddTransient<FavoritesAndHistoryPage>();
+        builder.Services.AddTransient<FavoritesTab>();
+        builder.Services.AddTransient<HistoryTab>();
+        builder.Services.AddTransient<SearchOptionsMenu>();
 
-		//register viewmodels for data binding
-		builder.Services.AddTransient<RecipeSearchPageModel>();
-		builder.Services.AddSingleton<ViewRecipePageModel>();
-
+        //register viewmodels for data binding
+        builder.Services.AddSingleton<RecipeSearchPageModel>(); //Singleton to try and maintain state of UserPrefs between search page and options
+		builder.Services.AddTransient<ViewRecipePageModel>();
+        builder.Services.AddTransient<FavoritesAndHistoryPageModel>();
 
         return builder.Build();
 	}

@@ -15,25 +15,44 @@ namespace Kitchen_Wizard.Models
     {
         private ISearchHelper searchHelper;
         private IFoodListHelper foodListHelper;
-        private IHistoryHelper historyHelper;
-        private IFavoritesHelper favoritesHelper;
         private IRecipeHelper recipeHelper;
         private IUserPreferences userPrefs;
 
-        public UserPreferences SearchOptions { get; set; }
+
+        public enum CuisineType
+        {
+            Any,
+            Mexican,
+            Italian,
+            Asian,
+            Indian,
+            American
+        }
+
+        public enum DietaryRestrictions
+        {
+            None,
+            Gluten,
+            Keto,
+            Vegan,
+            Vegetarian
+        }
+
+        [ObservableProperty]
+        public UserPreferences searchOptions;
+
+        [ObservableProperty]
+        public EnumOptions enumOptions;
 
         public ObservableCollection<Recipe> SearchResults { get; set; } = new();
 
         [ObservableProperty]
         string searchField;
 
-        public RecipeSearchPageModel(ISearchHelper _searchHelper, IFoodListHelper _foodListHelper, IHistoryHelper _historyHelper,
-                                IFavoritesHelper _favoritesHelper, IRecipeHelper _recipeHelper, IUserPreferences _userPrefs)
+        public RecipeSearchPageModel(ISearchHelper _searchHelper, IFoodListHelper _foodListHelper, IRecipeHelper _recipeHelper, IUserPreferences _userPrefs)
         {
             searchHelper = _searchHelper;
             foodListHelper = _foodListHelper;
-            historyHelper = _historyHelper;
-            favoritesHelper = _favoritesHelper;
             recipeHelper = _recipeHelper;
             userPrefs = _userPrefs;
 

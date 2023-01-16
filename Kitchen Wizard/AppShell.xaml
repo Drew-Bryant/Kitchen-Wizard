@@ -5,32 +5,50 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:Kitchen_Wizard"
     xmlns:views="clr-namespace:Kitchen_Wizard.Views"
+    xmlns:tab="clr-namespace:Kitchen_Wizard.Views.Embedded_Views"
     Shell.FlyoutBehavior="Flyout"
     >
 
-    <ShellContent
+    <FlyoutItem Title="Home">
+        <ShellContent
         Title="Home"
         ContentTemplate="{DataTemplate views:MainPage}"
-        Route="MainPage" />
-    <ShellContent
-        Title="Favorites and History"
-        ContentTemplate="{DataTemplate views:FavoritesAndHistoryPage}"
-        Route="FavoritesAndHistoryPage"/>
-    <ShellContent
-        Title="Search"
-        ContentTemplate="{DataTemplate views:RecipeSearchPage}"
-        Route="RecipeSearchPage" />
-    <ShellContent
-        Title="Food List"
-        ContentTemplate="{DataTemplate views:FoodListPage}"
-        Route="FoodListPage" />
-    <ShellContent
-        Title="Preferences"
-        ContentTemplate="{DataTemplate views:SettingsPage}"
-        Route="SettingsPage" />
+        Route="MainPage"/>
+    </FlyoutItem>
 
-    
-    
+    <FlyoutItem Title="Favorites and History">
+        <ShellContent
+            Title="Favorites"
+            ContentTemplate="{DataTemplate tab:FavoritesTab}"
+            Route="FavoritesTab"/>
+        <ShellContent
+            Title="History"
+            ContentTemplate="{DataTemplate tab:HistoryTab}"
+            Route="HistoryTab"/>
+    </FlyoutItem>
+
+    <FlyoutItem Title="Search">
+        <ShellContent
+            Title="Search"
+            ContentTemplate="{DataTemplate views:RecipeSearchPage}"
+            Route="RecipeSearchPage" />
+    </FlyoutItem>
+    <FlyoutItem Title="Food List">
+        <ShellContent
+            Title="Food List"
+            ContentTemplate="{DataTemplate views:FoodListPage}"
+            Route="FoodListPage" />
+    </FlyoutItem>
+
+    <FlyoutItem Title="Preferences">
+        <ShellContent
+            Title="Preferences"
+            ContentTemplate="{DataTemplate views:SettingsPage}"
+            Route="SettingsPage" />
+    </FlyoutItem>
+
+
+
     <!--Doesn't seem to work for some reason but this can be used to create icons at the bottom of the screen
     <TabBar>
         <Tab Title="Home">

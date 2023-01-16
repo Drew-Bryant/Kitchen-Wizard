@@ -12,6 +12,7 @@ namespace Kitchen_Wizard.Data_Objects.Static_Helpers
         public Recipe GetFullByID(int recipeID)
         {
             Recipe recipe = new();
+            recipe.Name = "Yummy Tasty Recipe";
             recipe.ID = recipeID;
             recipe.Description = "This is the description for the recipe";
 

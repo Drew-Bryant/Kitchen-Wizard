@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Kitchen_Wizard.Data_Objects;
+using Kitchen_Wizard.Data_Objects.Database_Helpers;
 using Kitchen_Wizard.Data_Objects.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -19,25 +20,19 @@ namespace Kitchen_Wizard.Models
         private IFavoritesHelper favoritesHelper;
         private IHistoryHelper historyHelper;
 
-        public ViewRecipePageModel(IFavoritesHelper _favHelper, IHistoryHelper _historyHelper)
-        {
-            favoritesHelper = _favHelper;
-            historyHelper = _historyHelper;
-        }
-
         [ObservableProperty]
         Recipe recipe;
 
         [RelayCommand]
         async void AddToFavorites()
         { 
-            favoritesHelper.Add(Recipe);
+            FavoritesHistoryDBHelper.AddFavorite(Recipe);
         }
 
         [RelayCommand]
-        void AddToHistory()
+        async void AddToHistory()
         {
-            historyHelper.Add(Recipe);
+            FavoritesHistoryDBHelper.AddHistory(Recipe);
         }
 
     }

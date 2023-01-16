@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static Kitchen_Wizard.Data_Objects.EnumOptions;
 
 namespace Kitchen_Wizard.Data_Objects.Interfaces
 {
@@ -11,8 +12,8 @@ namespace Kitchen_Wizard.Data_Objects.Interfaces
 
         public bool FoodTracking { get; set; }
         public bool Notifications { get; set; }
-        public CuisineType Cuisine { get; set; }
-        public DietaryRestrictions Dietary { get; set; }
+        public List<CuisineType> Cuisine { get; set; }
+        public List<DietaryRestrictions> Dietary { get; set; }
         public bool Restock { get; set; }
         public bool GroceryTrip { get; set; }
         public int GTAllowance { get; set; }
@@ -23,7 +24,7 @@ namespace Kitchen_Wizard.Data_Objects.Interfaces
         //      or do I make a new one and grab the prefs every time I call the search function?
         //
         //      either way, the constructor should call Get() to populate the object
-        public UserPreferences Get();
+        public void PopulateObject();
         public void Update(UserPreferences prefs);
     }
 }

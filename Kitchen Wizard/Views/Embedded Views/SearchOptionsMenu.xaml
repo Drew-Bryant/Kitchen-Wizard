@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Kitchen_Wizard.Views.Embedded_Views.SearchOptionsMenu"
+             xmlns:viewmodel="clr-namespace:Kitchen_Wizard.Models"
+             xmlns:namespace="clr-namespace:Kitchen_Wizard.Data_Objects"
+             x:DataType="viewmodel:RecipeSearchPageModel"
+             Title="SearchOptionsMenu">
+    <VerticalStackLayout>
+        <Label 
+            Text="General Options"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center" />
+        <Grid RowDefinitions="Auto, *"
+          ColumnDefinitions=".5*, .5*"
+          RowSpacing="10"
+          ColumnSpacing="10"
+          Padding="10">
+            <StackLayout RadioButtonGroup.GroupName="Cuisine"
+                     RadioButtonGroup.SelectedValue="{Binding SearchOptions.Cuisine, Converter={StaticResource EnumToIntConverter}}"
+                     Grid.Row="0"
+                     Grid.Column="0">
+            <Label Text="Cuisine Type:" />
+            <RadioButton Content="Any" IsChecked="True"/>
+            <RadioButton Content="Mexican" />
+            <RadioButton Content="Italian" />
+            <RadioButton Content="Indian" />
+            <RadioButton Content="American" />
+        </StackLayout>
+        <StackLayout RadioButtonGroup.GroupName="Dietary"
+                     RadioButtonGroup.SelectedValue="{Binding SearchOptions.Dietary, Converter={StaticResource EnumToIntConverter}}"
+                     Grid.Row="0"
+                     Grid.Column="1">
+            <Label Text="Restrictions:" />
+            <RadioButton Content="None" IsChecked="True"/>
+            <RadioButton Content="Gluten Free" />
+            <RadioButton Content="Keto" />
+            <RadioButton Content="Vegan" />
+            <RadioButton Content="Vegetarian" />
+        </StackLayout>
+        </Grid>
+    </VerticalStackLayout>
+</ContentPage>

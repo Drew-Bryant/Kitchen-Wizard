@@ -20,8 +20,11 @@ namespace Kitchen_Wizard.Data_Objects.Database_Helpers
             {
                 Recipe recipe = new Recipe();
                 int next = random.Next(25);
-                recipe.Name = "Recipe number" + (next);
-                recipe.ID = next;
+                //recipe.Name = "Recipe number" + (next);
+                //recipe.ID = next;
+                recipe.Name = "Recipe number" + (ii + 1);
+                recipe.ID = ii + 1;
+
                 recipes.Add(recipe);
             }
 

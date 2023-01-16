@@ -30,6 +30,7 @@
         </Grid>
         <ScrollView VerticalOptions="FillAndExpand">
             <VerticalStackLayout>
+                <Label Text="{Binding Recipe.Name}"/>
                 <Label Text="{Binding Recipe.ID, StringFormat='Recipe Number: {0}'}"/>
                 <Label Text="{Binding Recipe.Description}"/>
                 <Label Text="rawr" FontSize="599"/>

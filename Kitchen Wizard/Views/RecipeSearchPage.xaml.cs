@@ -19,15 +19,14 @@ public partial class RecipeSearchPage : ContentPage
 	}
 
 
-    private void SearchOptionsClicked(object sender, EventArgs e)
+    private async void SearchOptionsClicked(object sender, EventArgs e)
     {
-
+		await Shell.Current.GoToAsync("SearchOptionsMenu");
     }
 
     private async void SearchResultTapped(object sender, EventArgs e)
 	{
 		Recipe recipe = ((VisualElement)sender).BindingContext as Recipe;
-
 
 		//should never happen...sanity check
 		if (recipe == null)

@@ -2,11 +2,49 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Kitchen_Wizard.Views.Embedded_Views.FavoritesTab"
-             Title="FavoritesTab">
+             xmlns:viewmodel="clr-namespace:Kitchen_Wizard.Models"
+             xmlns:object="clr-namespace:Kitchen_Wizard.Data_Objects"
+             x:DataType="viewmodel:FavoritesAndHistoryPageModel"
+             Title="Favorites">
     <VerticalStackLayout>
         <Label 
             Text="Welcome to Favorites"
             VerticalOptions="Center" 
-            HorizontalOptions="Center" />
+            HorizontalOptions="Center"/>
+        
+        <!-- Display search results -->
+        <CollectionView x:Name="HistoryList"
+                        ItemsSource="{Binding Favorites}"
+                        Margin="20"
+                        SelectionMode="Single"
+                        Grid.Row="2"
+                        Grid.ColumnSpan="2">
+
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout Orientation="Vertical" ItemSpacing="10" />
+            </CollectionView.ItemsLayout>
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="{x:Type object:Recipe}">
+                    <Grid>
+                        <Frame>
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="FavoritesItemTapped"/>
+                            </Frame.GestureRecognizers>
+                            <Label Text="{Binding Name}" FontSize="12"/>
+                        </Frame>
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <ActivityIndicator IsVisible="{Binding LoadingData}"
+                           IsRunning="{Binding LoadingData}"
+                           HorizontalOptions="FillAndExpand"
+                           VerticalOptions="CenterAndExpand"
+                           Grid.RowSpan="2"
+                           Grid.ColumnSpan="2"/>
     </VerticalStackLayout>
+
+
 </ContentPage>
