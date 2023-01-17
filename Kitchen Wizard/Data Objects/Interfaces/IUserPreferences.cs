@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static Kitchen_Wizard.Data_Objects.EnumOptions;
 
 namespace Kitchen_Wizard.Data_Objects.Interfaces
 {
@@ -12,8 +11,8 @@ namespace Kitchen_Wizard.Data_Objects.Interfaces
 
         public bool FoodTracking { get; set; }
         public bool Notifications { get; set; }
-        public List<CuisineType> Cuisine { get; set; }
-        public List<DietaryRestrictions> Dietary { get; set; }
+        public List<string> Cuisine { get; set; }
+        public List<string> Dietary { get; set; }
         public bool Restock { get; set; }
         public bool GroceryTrip { get; set; }
         public int GTAllowance { get; set; }

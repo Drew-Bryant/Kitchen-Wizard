@@ -8,5 +8,5 @@
              xmlns:viewmodel="clr-namespace:Kitchen_Wizard.Models"
              x:DataType="viewmodel:FavoritesAndHistoryPageModel"
              Title="{Binding Title}">
-
+    
 </ContentPage>

@@ -1,41 +1,50 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Kitchen_Wizard.Views.RecipeSearchPage"
-             xmlns:viewmodel="clr-namespace:Kitchen_Wizard.Models"
-             xmlns:object="clr-namespace:Kitchen_Wizard.Data_Objects" 
-             x:DataType="viewmodel:RecipeSearchPageModel"
-             Title="{Binding Title}">
+<ContentPage
+    x:Class="Kitchen_Wizard.Views.RecipeSearchPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:object="clr-namespace:Kitchen_Wizard.Data_Objects"
+    xmlns:viewmodel="clr-namespace:Kitchen_Wizard.Models"
+    Title="{Binding Title}"
+    x:DataType="viewmodel:RecipeSearchPageModel">
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Customize" Clicked="SearchOptionsClicked" IconImageSource="{FontImage Glyph='+', Color=White, Size=22}" />
+        <ToolbarItem
+            Clicked="SearchOptionsClicked" Text="Options"/>
+        <!--IconImageSource="{FontImage Glyph='+',
+                                        Color=White,
+                                        Size=22}"-->
     </ContentPage.ToolbarItems>
-    <Grid RowDefinitions="Auto, *"
-          ColumnDefinitions=".75*, .25*"
-          RowSpacing="10"
-          ColumnSpacing="10"
-          Padding="10">
-        <Entry x:Name="SearchField"
-               Text="{Binding SearchField}"
-               Placeholder="Click here to search"              
-               Grid.Row="0"/>
+    <Grid
+        Padding="10"
+        ColumnDefinitions=".75*, .25*"
+        ColumnSpacing="10"
+        RowDefinitions="Auto, *"
+        RowSpacing="10">
+        <Entry
+            x:Name="SearchField"
+            Grid.Row="0"
+            Placeholder="Click here to search"
+            Text="{Binding SearchField}" />
 
-        <Button Text="Search"
-                IsEnabled="{Binding NotLoadingData}"
-                Command="{Binding KeywordSearchCommand}"
-                CommandParameter="{Binding SearchField}"
-                Grid.Row="0"
-                Grid.Column="1"/>
-        
-        <!-- Display search results -->
-        <CollectionView x:Name="SearchResults"
-                        ItemsSource="{Binding SearchResults}"
-                        Margin="20"
-                        SelectionMode="Single"
-                        Grid.Row="2"
-                        Grid.ColumnSpan="2">
+        <Button
+            Grid.Row="0"
+            Grid.Column="1"
+            Command="{Binding KeywordSearchCommand}"
+            CommandParameter="{Binding SearchField}"
+            IsEnabled="{Binding NotLoadingData}"
+            Text="Search" />
+
+        <!--  Display search results  -->
+        <CollectionView
+            x:Name="SearchResults"
+            Grid.Row="2"
+            Grid.ColumnSpan="2"
+            Margin="20"
+            ItemsSource="{Binding SearchResults}"
+            SelectionMode="Single">
 
             <CollectionView.ItemsLayout>
-                <LinearItemsLayout Orientation="Vertical" ItemSpacing="10" />
+                <LinearItemsLayout ItemSpacing="10" Orientation="Vertical" />
             </CollectionView.ItemsLayout>
 
             <CollectionView.ItemTemplate>
@@ -43,20 +52,21 @@
                     <Grid>
                         <Frame>
                             <Frame.GestureRecognizers>
-                                <TapGestureRecognizer Tapped="SearchResultTapped"/>
+                                <TapGestureRecognizer Tapped="SearchResultTapped" />
                             </Frame.GestureRecognizers>
-                            <Label Text="{Binding Name}" FontSize="12"/>
+                            <Label FontSize="12" Text="{Binding Name}" />
                         </Frame>
                     </Grid>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
 
-        <ActivityIndicator IsVisible="{Binding LoadingData}"
-                           IsRunning="{Binding LoadingData}"
-                           HorizontalOptions="FillAndExpand"
-                           VerticalOptions="CenterAndExpand"
-                           Grid.RowSpan="2"
-                           Grid.ColumnSpan="2"/>
+        <ActivityIndicator
+            Grid.RowSpan="2"
+            Grid.ColumnSpan="2"
+            HorizontalOptions="FillAndExpand"
+            IsRunning="{Binding LoadingData}"
+            IsVisible="{Binding LoadingData}"
+            VerticalOptions="CenterAndExpand" />
     </Grid>
 </ContentPage>
