@@ -1,27 +1,30 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Kitchen_Wizard.Views.Embedded_Views.HistoryTab"
-             xmlns:viewmodel="clr-namespace:Kitchen_Wizard.Models"
-             xmlns:object="clr-namespace:Kitchen_Wizard.Data_Objects"
-             x:DataType="viewmodel:FavoritesAndHistoryPageModel"
-             Title="History">
+<ContentPage
+    x:Class="Kitchen_Wizard.Views.Embedded_Views.HistoryTab"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:object="clr-namespace:Kitchen_Wizard.Data_Objects"
+    xmlns:viewmodel="clr-namespace:Kitchen_Wizard.Models"
+    Title="History"
+    x:DataType="viewmodel:FavoritesAndHistoryPageModel">
     <VerticalStackLayout>
-        <Label 
+        <Label
+            HorizontalOptions="Center"
             Text="Welcome to History"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center"/>
+            VerticalOptions="Center" />
 
-        <!-- Display search results -->
-        <CollectionView x:Name="HistoryList"
-                        ItemsSource="{Binding Favorites}"
-                        Margin="20"
-                        SelectionMode="Single"
-                        Grid.Row="2"
-                        Grid.ColumnSpan="2">
+        <!--  Display search results  -->
+        <CollectionView
+            x:Name="HistoryList"
+            Grid.Row="2"
+            Grid.ColumnSpan="2"
+            Margin="20"
+            ItemsSource="{Binding History}"
+            SelectionMode="Single"
+            EmptyView="History is empty. Get Cookin!">
 
             <CollectionView.ItemsLayout>
-                <LinearItemsLayout Orientation="Vertical" ItemSpacing="10" />
+                <LinearItemsLayout ItemSpacing="10" Orientation="Vertical" />
             </CollectionView.ItemsLayout>
 
             <CollectionView.ItemTemplate>
@@ -29,21 +32,22 @@
                     <Grid>
                         <Frame>
                             <Frame.GestureRecognizers>
-                                <TapGestureRecognizer Tapped="HistoryItemTapped"/>
+                                <TapGestureRecognizer Tapped="HistoryItemTapped" />
                             </Frame.GestureRecognizers>
-                            <Label Text="{Binding Name}" FontSize="12"/>
+                            <Label FontSize="12" Text="{Binding Name}" />
                         </Frame>
                     </Grid>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
 
-        <ActivityIndicator IsVisible="{Binding LoadingData}"
-                           IsRunning="{Binding LoadingData}"
-                           HorizontalOptions="FillAndExpand"
-                           VerticalOptions="CenterAndExpand"
-                           Grid.RowSpan="2"
-                           Grid.ColumnSpan="2"/>
+        <ActivityIndicator
+            Grid.RowSpan="2"
+            Grid.ColumnSpan="2"
+            HorizontalOptions="FillAndExpand"
+            IsRunning="{Binding LoadingData}"
+            IsVisible="{Binding LoadingData}"
+            VerticalOptions="CenterAndExpand" />
     </VerticalStackLayout>
 
 

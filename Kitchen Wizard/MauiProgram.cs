@@ -16,7 +16,6 @@ public static class MauiProgram
 		var builder = MauiApp.CreateBuilder();
 		builder
 			.UseMauiApp<App>()
-			.UseSharpnadoTabs(loggerEnable: false)
 			.ConfigureFonts(fonts =>
 			{
 				fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
@@ -42,15 +41,19 @@ public static class MauiProgram
         builder.Services.AddTransient<RecipeSearchPage>();
 		builder.Services.AddTransient<ViewRecipePage>();
         builder.Services.AddTransient<FavoritesAndHistoryPage>();
+        builder.Services.AddTransient<DatabaseManagement>();
+
+        //embedded views
         builder.Services.AddTransient<FavoritesTab>();
         builder.Services.AddTransient<HistoryTab>();
+        builder.Services.AddTransient<IngredientsTab>();
         builder.Services.AddTransient<SearchOptionsMenu>();
 
         //register viewmodels for data binding
         builder.Services.AddSingleton<RecipeSearchPageModel>(); //Singleton to try and maintain state of UserPrefs between search page and options
-		builder.Services.AddTransient<ViewRecipePageModel>();
+		builder.Services.AddSingleton<ViewRecipePageModel>();
         builder.Services.AddTransient<FavoritesAndHistoryPageModel>();
-
+        builder.Services.AddTransient<DatabaseManagementPageModel>();
         return builder.Build();
 	}
 }

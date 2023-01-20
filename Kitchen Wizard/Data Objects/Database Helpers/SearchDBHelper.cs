@@ -10,7 +10,7 @@ namespace Kitchen_Wizard.Data_Objects.Database_Helpers
 {
     public class SearchDBHelper : ISearchHelper
     {
-        public Task<List<Recipe>>SearchRecipeByKeyword(string keyword, UserPreferences prefs)
+        public List<Recipe>SearchRecipeByKeyword(string keyword, UserPreferences prefs)
         {
             throw new NotImplementedException();
         }

@@ -10,6 +10,7 @@
     <!--  Add an item to the toolbar  -->
     <ContentPage.ToolbarItems>
         <!--  ToolbarItem for opening ingredients flyout, or swipe gesture  -->
+        <ToolbarItem Clicked="IngredientsClicked" Text="Ingredients" />
         <!--<ToolbarItem Text="Add" Clicked="Add_Clicked" IconImageSource="{FontImage Glyph='+', Color=White, Size=22}" />-->
     </ContentPage.ToolbarItems>
 
@@ -23,20 +24,49 @@
                 Grid.Column="0"
                 Margin="10"
                 Command="{Binding AddToFavoritesCommand}"
-                Text="Add to Favorites" />
+                IsVisible="{Binding Recipe.IsNotFavorite}"
+                Text="Add Favorite" />
+            <Button
+                Grid.Row="0"
+                Grid.Column="0"
+                Margin="10"
+                Command="{Binding RemoveFromFavoritesCommand}"
+                IsVisible="{Binding Recipe.IsFavorite}"
+                Text="Remove Favorite" />
             <Button
                 Grid.Row="0"
                 Grid.Column="2"
                 Margin="10"
                 Command="{Binding AddToHistoryCommand}"
-                Text="Make This Recipe" />
+                IsVisible="{Binding Recipe.IsNotHistory}"
+                Text="Add History" />
+            <Button
+                Grid.Row="0"
+                Grid.Column="2"
+                Margin="10"
+                Command="{Binding RemoveFromHistoryCommand}"
+                IsVisible="{Binding Recipe.IsHistory}"
+                Text="Remove History" />
         </Grid>
         <ScrollView VerticalOptions="FillAndExpand">
             <VerticalStackLayout>
                 <Label Text="{Binding Recipe.Name}" />
-                <Label Text="{Binding Recipe.ID, StringFormat='Recipe Number: {0}'}" />
+                <Label Text="{Binding Recipe.Author, StringFormat='Created By: {0}'}" />
+                <Label Text="{Binding Recipe.Source, StringFormat='Source Website: {0}'}" />
+                <Label Text="{Binding Recipe.Servings, StringFormat='Servings: {0}'}" />
+                <Label Text="{Binding Recipe.ID, StringFormat='Recipe With ID Number: {0}'}" />
                 <Label Text="{Binding Recipe.Description}" />
-                <Label FontSize="599" Text="rawr" />
+                <CollectionView
+                    Grid.Row="2"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2"
+                    ItemsSource="{Binding Recipe.Steps}">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="{x:Type x:String}">
+                            <Label Text="{Binding .}" />
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
             </VerticalStackLayout>
         </ScrollView>
 

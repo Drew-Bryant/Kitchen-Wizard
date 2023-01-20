@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="Kitchen_Wizard.Views.DatabaseManagement"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:viewmodel="clr-namespace:Kitchen_Wizard.Models"
+    Title="Database Management"
+    x:DataType="viewmodel:DatabaseManagementPageModel">
+    <VerticalStackLayout Margin="50" VerticalOptions="Center">
+        <Button
+            Margin="20"
+            Command="{Binding ClearFavoritesCommand}"
+            Text="Drop Favorites Table" />
+        <Button
+            Margin="20"
+            Command="{Binding ClearHistoryCommand}"
+            Text="Drop History Table" />
+    </VerticalStackLayout>
+</ContentPage>

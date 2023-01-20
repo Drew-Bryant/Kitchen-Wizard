@@ -19,6 +19,8 @@ namespace Kitchen_Wizard.Data_Objects
         Quart,
         Gallon,
         Pound,
+        lb,
+        lbs,
         mg,
         g,
         kg,
@@ -29,8 +31,8 @@ namespace Kitchen_Wizard.Data_Objects
     }
     public class Food
     {
-
-        public double Quantity { get; set; }
+        public double QuantityValue { get; set; }
+        public string QuantityString { get; set; }
         public Unit Units { get; set; }
         public string Name { get; set; }
         public bool IsSpice { get; set; }

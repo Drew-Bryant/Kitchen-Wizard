@@ -125,12 +125,12 @@ namespace Kitchen_Wizard.Models
         }
 
         [RelayCommand]
-        async Task KeywordSearch(string keyword)
+        void KeywordSearch(string keyword)
         {
             SearchResults.Clear();
             //do the search here
 
-            var results = await searchHelper.SearchRecipeByKeyword(keyword, (UserPreferences)userPrefs);
+            var results = searchHelper.SearchRecipeByKeyword(keyword, SearchOptions);
 
             foreach(var recipe in results)
             {
@@ -182,7 +182,7 @@ namespace Kitchen_Wizard.Models
                     if (selected)
                     {
                         AnyChecked = false;
-                        SearchOptions.Dietary.Remove(CuisineType.Any.ToString());
+                        bool result = SearchOptions.Cuisine.Remove(CuisineType.Any.ToString());
                     }
                     break;
                 case CuisineType.Italian:
@@ -191,7 +191,7 @@ namespace Kitchen_Wizard.Models
                     if (selected)
                     {
                         AnyChecked = false;
-                        SearchOptions.Dietary.Remove(CuisineType.Any.ToString());
+                        SearchOptions.Cuisine.Remove(CuisineType.Any.ToString());
                     }
                     break;
                 case CuisineType.Asian:
@@ -200,7 +200,7 @@ namespace Kitchen_Wizard.Models
                     if (selected)
                     {
                         AnyChecked = false;
-                        SearchOptions.Dietary.Remove(CuisineType.Any.ToString());
+                        SearchOptions.Cuisine.Remove(CuisineType.Any.ToString());
                     }
                     break;
                 case CuisineType.Indian:
@@ -209,7 +209,7 @@ namespace Kitchen_Wizard.Models
                     if (selected)
                     {
                         AnyChecked = false;
-                        SearchOptions.Dietary.Remove(CuisineType.Any.ToString());
+                        SearchOptions.Cuisine.Remove(CuisineType.Any.ToString());
                     }
                     break;
                 case CuisineType.American:
@@ -218,7 +218,7 @@ namespace Kitchen_Wizard.Models
                     if (selected)
                     {
                         AnyChecked = false;
-                        SearchOptions.Dietary.Remove(CuisineType.Any.ToString());
+                        SearchOptions.Cuisine.Remove(CuisineType.Any.ToString());
                     }
                     break;
             }

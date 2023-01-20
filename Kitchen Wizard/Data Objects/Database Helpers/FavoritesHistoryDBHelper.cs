@@ -1,11 +1,13 @@
 ﻿
 using Kitchen_Wizard.Data_Objects.Interfaces;
+using Kitchen_Wizard.Models;
 using Kitchen_Wizard.Views;
 using LiteDB;
 using Microsoft.Maui.Controls;
 using SQLite;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -28,15 +30,14 @@ namespace Kitchen_Wizard.Data_Objects.Database_Helpers
 
     public static class FavoritesHistoryDBHelper
     {
-
          static SQLiteConnection db;
-
         static void Init()
         {
-            if (db != null)
-                return;
+            if (db == null)
+            {
+                db = new SQLiteConnection(Path.Combine(FileSystem.AppDataDirectory, "LocalKitchenWizardDB"));
+            }
 
-            db = new SQLiteConnection(Path.Combine(FileSystem.AppDataDirectory, "LocalKitchenWizardDB"));
 
             db.CreateTable<FavoritesDBItem>();
             db.CreateTable<HistoryDBItem>();
@@ -45,19 +46,22 @@ namespace Kitchen_Wizard.Data_Objects.Database_Helpers
         public static void AddFavorite(Recipe recipe)
         {
             Init();
-            db.InsertOrReplace(new FavoritesDBItem() { ID = recipe.ID, recipeName = recipe.Name});
+            var dbItem = new FavoritesDBItem();
+            dbItem.recipeName = recipe.Name;
+            dbItem.ID = recipe.ID;
+            db.InsertOrReplace(dbItem, typeof(FavoritesDBItem));
+
         }
 
         public static void AddHistory(Recipe recipe)
         {
             Init();
 
-
             var dbItem = new HistoryDBItem();
             dbItem.recipeName = recipe.Name;
             dbItem.ID = recipe.ID;
 
-            db.InsertOrReplace(dbItem);
+            db.InsertOrReplace(dbItem, typeof(HistoryDBItem));
 
         }
 
@@ -73,7 +77,7 @@ namespace Kitchen_Wizard.Data_Objects.Database_Helpers
         {
             Init();
 
-            db.Delete<FavoritesDBItem>(recipe.ID);
+            db.Delete<HistoryDBItem>(recipe.ID);
         }
 
         public static List<Recipe> LoadFavorites()
@@ -114,6 +118,56 @@ namespace Kitchen_Wizard.Data_Objects.Database_Helpers
             }
 
             return recipes;
+        }
+
+        public static void ClearFavorites()
+        {
+            Init();
+
+            IEnumerable<TableMapping> mappings = db.TableMappings;
+
+            foreach (var mapping in mappings)
+            {
+                if (mapping.MappedType == typeof(FavoritesDBItem))
+                {
+                    db.DropTable(mapping);
+                    Debug.WriteLine("Favorites Table Dropped");
+                    return;
+                }
+            }
+        }
+        public static void ClearHistory()
+        {
+            Init();
+
+            var mappings = db.TableMappings;
+
+            foreach (var mapping in mappings)
+            {
+                if(mapping.MappedType == typeof(HistoryDBItem))
+                {
+                    db.DropTable(mapping);
+                    Debug.WriteLine("History Table Dropped");
+                    return;
+
+                }
+            }
+        }
+
+        public static bool IsFavorite(int recipeID)
+        {
+            Init();
+
+            //return true if the table contains this ID
+            return db.Table<FavoritesDBItem>().Where(x => recipeID == x.ID).Count() > 0;
+        }
+
+        public static bool IsHistory(int recipeID)
+        {
+            Init();
+
+            //return true if the table contains this ID
+            return db.Table<HistoryDBItem>().Where(x => recipeID == x.ID).Count() > 0;
         }
 
     }

@@ -18,7 +18,8 @@
                         Margin="20"
                         SelectionMode="Single"
                         Grid.Row="2"
-                        Grid.ColumnSpan="2">
+                        Grid.ColumnSpan="2"
+                        EmptyView="Favorites is Empty.">
 
             <CollectionView.ItemsLayout>
                 <LinearItemsLayout Orientation="Vertical" ItemSpacing="10" />

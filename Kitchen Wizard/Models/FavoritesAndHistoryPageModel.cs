@@ -15,10 +15,10 @@ namespace Kitchen_Wizard.Models
     public partial class FavoritesAndHistoryPageModel : IKitchenWizardViewModel
     {
         public FavoritesAndHistoryPageModel()
-        {           
+        {      
             Title = "Favorites and History";
-
             LoadData();
+           
         }
 
         private void LoadData()

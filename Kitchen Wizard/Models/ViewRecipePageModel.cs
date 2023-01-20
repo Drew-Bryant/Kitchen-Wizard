@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.Input;
 using Kitchen_Wizard.Data_Objects;
 using Kitchen_Wizard.Data_Objects.Database_Helpers;
 using Kitchen_Wizard.Data_Objects.Interfaces;
+using Kitchen_Wizard.Views.Embedded_Views;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -17,23 +18,39 @@ namespace Kitchen_Wizard.Models
     public partial class ViewRecipePageModel : IKitchenWizardViewModel
     {
 
-        private IFavoritesHelper favoritesHelper;
-        private IHistoryHelper historyHelper;
-
         [ObservableProperty]
         Recipe recipe;
 
         [RelayCommand]
-        async void AddToFavorites()
+        void AddToFavorites()
         { 
             FavoritesHistoryDBHelper.AddFavorite(Recipe);
+            Recipe.IsFavorite = true;
+
         }
 
         [RelayCommand]
-        async void AddToHistory()
+        void RemoveFromFavorites()
+        {
+            FavoritesHistoryDBHelper.RemoveFavorite(Recipe);
+            Recipe.IsFavorite = false;
+        }
+
+        [RelayCommand]
+        void AddToHistory()
         {
             FavoritesHistoryDBHelper.AddHistory(Recipe);
+            Recipe.IsHistory = true;
+
         }
+
+        [RelayCommand]
+        void RemoveFromHistory()
+        {
+            FavoritesHistoryDBHelper.RemoveHistory(Recipe);
+            Recipe.IsHistory = false;
+        }
+
 
     }
 }

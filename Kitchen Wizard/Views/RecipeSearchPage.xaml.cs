@@ -24,7 +24,7 @@ public partial class RecipeSearchPage : ContentPage
 		await Shell.Current.GoToAsync("SearchOptionsMenu");
     }
 
-    private async void SearchResultTapped(object sender, EventArgs e)
+    private void SearchResultTapped(object sender, EventArgs e)
 	{
 		Recipe recipe = ((VisualElement)sender).BindingContext as Recipe;
 
@@ -34,12 +34,10 @@ public partial class RecipeSearchPage : ContentPage
 
 		recipe = recipeHelper.GetFullByID(recipe.ID);
 
-		await Shell.Current.GoToAsync(nameof(ViewRecipePage), true, new Dictionary<string, object>
+		Shell.Current.GoToAsync(nameof(ViewRecipePage), true, new Dictionary<string, object>
 		{
-			{"Recipe", recipe}
+			{"Recipe", recipe},
 		});
-
-		
 	}
 
 }

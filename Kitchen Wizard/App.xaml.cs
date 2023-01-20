@@ -1,4 +1,6 @@
-﻿namespace Kitchen_Wizard;
+﻿using Kitchen_Wizard.Views;
+
+namespace Kitchen_Wizard;
 
 public partial class App : Application
 {
@@ -7,5 +9,6 @@ public partial class App : Application
 		InitializeComponent();
 
 		MainPage = new AppShell();
+		FavoritesAndHistoryPage favoritesAndHistoryPage = new FavoritesAndHistoryPage();
 	}
 }
