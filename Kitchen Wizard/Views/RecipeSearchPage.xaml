@@ -41,13 +41,17 @@
             Grid.Row="2"
             Grid.ColumnSpan="2"
             Margin="20"
+            EmptyView=""
             ItemsSource="{Binding SearchResults}">
 
             <CollectionView.EmptyViewTemplate>
                 <DataTemplate>
-                    <VerticalStackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
+                    <VerticalStackLayout
+                        Margin="0,20,0,0"
+                        HorizontalOptions="CenterAndExpand"
+                        VerticalOptions="Start">
                         <!--<Label FontSize="16" Text="{x:Reference SearchField}" />-->
-                        <Label FontSize="16" Text="Please enter a new search term or edit your search options." />
+                        <Label FontSize="16" Text="There were no results. Please enter a new search term or edit your search options." />
                     </VerticalStackLayout>
                 </DataTemplate>
             </CollectionView.EmptyViewTemplate>

@@ -18,13 +18,15 @@ public partial class RecipeSearchPage : ContentPage
         BindingContext = viewModel;
 		recipeHelper = helper;
 		model = viewModel;
+
+		//load prefs first time search page is loaded
 		model.LoadPrefs();
 	}
 
 
     private async void SearchOptionsClicked(object sender, EventArgs e)
     {
-        model.LoadPrefs();
+        model.SetDefaultOptions();
         await Shell.Current.GoToAsync("SearchOptionsMenu");
 
     }

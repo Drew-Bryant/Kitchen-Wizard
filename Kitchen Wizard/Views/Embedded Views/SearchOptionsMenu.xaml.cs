@@ -10,8 +10,7 @@ public partial class SearchOptionsMenu : ContentPage
 		InitializeComponent();
 
 		BindingContext = viewModel;
-        viewModel.LoadPrefs();
-    }
-
+        viewModel.SetDefaultOptions();
+	}
 
 }

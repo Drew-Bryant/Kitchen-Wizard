@@ -14,7 +14,6 @@ public partial class ViewRecipePage : ContentPage
         BindingContext = viewModel;
         model = viewModel;
 
-
     }
 
     private void IngredientsClicked(object sender, EventArgs e)

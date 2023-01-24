@@ -29,6 +29,8 @@ namespace Kitchen_Wizard.Models
         [ObservableProperty]
         Recipe recipe;
 
+        public ObservableCollection<string> Steps { get; set; } = new();
+
         [ObservableProperty]
         string shareButtonText = ShareString;
         [ObservableProperty]
@@ -49,6 +51,14 @@ namespace Kitchen_Wizard.Models
                 Recipe.HistoryDate = FavoritesHistoryDBHelper.GetHistoryDate(Recipe);
                 HistoryButtonText = $"Made on\n{Recipe.HistoryDate.ToString("MM/dd/yyyy")}";
             }
+
+            Steps.Clear();
+            foreach(var step in Recipe.Steps)
+            {
+                Steps.Add(step);
+            }
+
+
         }
         [RelayCommand]
         void AddToFavorites()

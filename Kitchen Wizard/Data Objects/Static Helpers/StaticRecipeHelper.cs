@@ -22,7 +22,7 @@ namespace Kitchen_Wizard.Data_Objects.Static_Helpers
             recipe.Description = "This is the description for the recipe";
 
             string stepString= "";
-            for (int ii = 1; ii < 11; ii++)
+            for (int ii = 1; ii < 20; ii++)
             {
                 
                 stepString += $"{ii}.\tThis is step number {ii},";

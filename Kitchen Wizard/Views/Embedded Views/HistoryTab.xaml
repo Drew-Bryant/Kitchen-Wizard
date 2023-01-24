@@ -13,7 +13,8 @@
             Text="Welcome to History"
             VerticalOptions="Center" />
         <RefreshView IsRefreshing="{Binding HistoryIsRefreshing}"
-             Command="{Binding RefreshHistoryCommand}">
+             Command="{Binding RefreshHistoryCommand}"
+                     IsEnabled="True">
             <!--  Display search results  -->
             <CollectionView
             x:Name="HistoryList"

@@ -66,19 +66,15 @@ namespace Kitchen_Wizard.Models
             recipeHelper = _recipeHelper;
             userPrefs = _userPrefs;
 
-            //LoadPrefs();
-
-
             Title = "Recipe Search";
 
-            //TODO: Initialize search options to app defaults or user preferences if set
+            LoadPrefs();
 
         }
 
         public void LoadPrefs()
         {
             SearchOptions.LoadPrefs();
-            SetDefaultOptions();
         }
         public void SetDefaultOptions()
         {
@@ -153,8 +149,6 @@ namespace Kitchen_Wizard.Models
             SearchResults.Clear();
             //do the search here
 
-            LoadPrefs();
-
             var results = searchHelper.SearchRecipeByKeyword(keyword, SearchOptions);
 
             foreach(var recipe in results)
@@ -163,13 +157,12 @@ namespace Kitchen_Wizard.Models
             }
         }
 
-
-
         [RelayCommand]
         public void ToggleCuisine(string name)
         {
             //indicates whether the control was turned on or off
             bool selected = false;
+
             if (SearchOptions.Cuisine.Contains(name))
             {
                 SearchOptions.Cuisine.Remove(name);
