@@ -33,7 +33,7 @@
             Command="{Binding KeywordSearchCommand}"
             CommandParameter="{Binding SearchField}"
             IsEnabled="{Binding NotLoadingData}"
-            Text="Search"/>
+            Text="Search" />
 
         <!--  Display search results  -->
         <CollectionView
@@ -41,8 +41,7 @@
             Grid.Row="2"
             Grid.ColumnSpan="2"
             Margin="20"
-            ItemsSource="{Binding SearchResults}"
-            SelectionMode="Single">
+            ItemsSource="{Binding SearchResults}">
 
             <CollectionView.EmptyViewTemplate>
                 <DataTemplate>

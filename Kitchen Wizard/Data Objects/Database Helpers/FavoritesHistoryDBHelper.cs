@@ -26,6 +26,7 @@ namespace Kitchen_Wizard.Data_Objects.Database_Helpers
         [PrimaryKey]
         public int ID { get; set; }
         public string recipeName { get; set; }
+        public DateTime timestamp { get; set; }
     }
 
     public static class FavoritesHistoryDBHelper
@@ -53,15 +54,18 @@ namespace Kitchen_Wizard.Data_Objects.Database_Helpers
 
         }
 
-        public static void AddHistory(Recipe recipe)
+        public static DateTime AddHistory(Recipe recipe)
         {
             Init();
 
             var dbItem = new HistoryDBItem();
             dbItem.recipeName = recipe.Name;
             dbItem.ID = recipe.ID;
+            dbItem.timestamp = DateTime.Now;
 
             db.InsertOrReplace(dbItem, typeof(HistoryDBItem));
+
+            return dbItem.timestamp;
 
         }
 
@@ -77,7 +81,8 @@ namespace Kitchen_Wizard.Data_Objects.Database_Helpers
         {
             Init();
 
-            db.Delete<HistoryDBItem>(recipe.ID);
+
+            db.Table<HistoryDBItem>().Delete(x => x.timestamp == recipe.HistoryDate);
         }
 
         public static List<Recipe> LoadFavorites()
@@ -113,6 +118,7 @@ namespace Kitchen_Wizard.Data_Objects.Database_Helpers
                 Recipe recipe = new Recipe();
                 recipe.ID = item.ID;
                 recipe.Name = item.recipeName;
+                recipe.HistoryDate = item.timestamp;
                 recipe.IsHistory = true;
                 recipes.Add(recipe);
             }
@@ -168,6 +174,25 @@ namespace Kitchen_Wizard.Data_Objects.Database_Helpers
 
             //return true if the table contains this ID
             return db.Table<HistoryDBItem>().Where(x => recipeID == x.ID).Count() > 0;
+        }
+
+        public static DateTime GetHistoryDate(Recipe recipe)
+        {
+            List<HistoryDBItem> items = db.Table<HistoryDBItem>().Where(x => x.ID == recipe.ID).ToList();
+
+            HistoryDBItem dbItem = items[0];
+            if(items.Count > 1)
+            {
+                foreach(var item in items)
+                {
+                    if(item.timestamp > dbItem.timestamp)
+                    {
+                        dbItem = item;
+                    }
+                }
+            }
+
+            return dbItem.timestamp;
         }
 
     }

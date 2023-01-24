@@ -11,9 +11,9 @@
             Text="Welcome to Favorites"
             VerticalOptions="Center" 
             HorizontalOptions="Center"/>
-        
-        <!-- Display search results -->
-        <CollectionView x:Name="HistoryList"
+        <RefreshView IsRefreshing="{Binding FavoritesIsRefreshing}"
+             Command="{Binding RefreshFavoritesCommand}">
+            <CollectionView x:Name="HistoryList"
                         ItemsSource="{Binding Favorites}"
                         Margin="20"
                         SelectionMode="Single"
@@ -21,23 +21,25 @@
                         Grid.ColumnSpan="2"
                         EmptyView="Favorites is Empty.">
 
-            <CollectionView.ItemsLayout>
-                <LinearItemsLayout Orientation="Vertical" ItemSpacing="10" />
-            </CollectionView.ItemsLayout>
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Vertical" ItemSpacing="10" />
+                </CollectionView.ItemsLayout>
 
-            <CollectionView.ItemTemplate>
-                <DataTemplate x:DataType="{x:Type object:Recipe}">
-                    <Grid>
-                        <Frame>
-                            <Frame.GestureRecognizers>
-                                <TapGestureRecognizer Tapped="FavoritesItemTapped"/>
-                            </Frame.GestureRecognizers>
-                            <Label Text="{Binding Name}" FontSize="12"/>
-                        </Frame>
-                    </Grid>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="{x:Type object:Recipe}">
+                        <Grid>
+                            <Frame>
+                                <Frame.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="FavoritesItemTapped"/>
+                                </Frame.GestureRecognizers>
+                                <Label Text="{Binding Name}" FontSize="12"/>
+                            </Frame>
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </RefreshView>
+
 
         <ActivityIndicator IsVisible="{Binding LoadingData}"
                            IsRunning="{Binding LoadingData}"

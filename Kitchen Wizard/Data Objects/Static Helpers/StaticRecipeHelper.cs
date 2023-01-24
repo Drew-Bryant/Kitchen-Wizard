@@ -42,9 +42,6 @@ namespace Kitchen_Wizard.Data_Objects.Static_Helpers
             recipe.IsFavorite = FavoritesHistoryDBHelper.IsFavorite(recipe.ID);
             recipe.IsHistory = FavoritesHistoryDBHelper.IsHistory(recipe.ID);
 
-            recipe.IsNotFavorite = !recipe.IsFavorite;
-            recipe.IsNotHistory = !recipe.IsHistory;
-
             recipe.Cuisine = CuisineType.American;
 
             recipe.Dietary = new();

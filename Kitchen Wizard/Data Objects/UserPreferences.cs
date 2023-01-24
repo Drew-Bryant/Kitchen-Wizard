@@ -30,7 +30,7 @@ namespace Kitchen_Wizard.Data_Objects
     {
 
         //key values for local storage
-        public string foodTrackingKey = "foodTracking";
+        string foodTrackingKey = "foodTracking";
         string notificationsKey = "notifications";
         string cuisineKey = "cuisineKey";
         string dietaryKey = "dietaryKey";
@@ -39,6 +39,8 @@ namespace Kitchen_Wizard.Data_Objects
         string gtAllowKey = "gtAllowKey";
         string infSpicesKey = "infSpices";
 
+        string cuisineDefault = "Any";
+        string dietaryDefault = "None";
 
 
         public bool FoodTracking { get; set; }
@@ -50,19 +52,12 @@ namespace Kitchen_Wizard.Data_Objects
         public int GTAllowance { get; set; }
         public bool InfiniteSpices { get; set; }
 
-        //TODO: What do I do with this class?
-        //      Do I make it dependency injection and have it just be static on the page
-        //      or do I make a new one and grab the prefs every time I call the search function?
-        //
-        //      either way, the constructor should call Get() to populate the object
         public UserPreferences()
         {
-            PopulateObject();
-            //TODO:
-            //try to load preferences from user's local storage
-            //if there, load them, otherwise just build the defaults
+            LoadPrefs();
         }
-        public void PopulateObject()
+
+        public void LoadPrefs()
         {
 
             var cuisineList = new List<string>() {  };
@@ -71,25 +66,65 @@ namespace Kitchen_Wizard.Data_Objects
             FoodTracking = Preferences.Default.Get<bool>(foodTrackingKey, false);
             Notifications = Preferences.Default.Get<bool>(notificationsKey, false);
 
-            Cuisine = Preferences.Default.Get<List<string>>(cuisineKey, null);
-            if(Cuisine == null)
-            {
-                Cuisine = new List<string>() { CuisineType.Any.ToString() };
-            }
 
-            Dietary = Preferences.Default.Get<List<string>>(dietaryKey, null);
-            if (Dietary == null)
-            {
-                Dietary = new List<string>() { DietaryRestrictions.None.ToString() };
-            }
+            Cuisine = StringToList(Preferences.Default.Get<string>(cuisineKey, cuisineDefault));
+
+            Dietary = StringToList(Preferences.Default.Get<string>(dietaryKey, dietaryDefault));
+
             Restock = Preferences.Default.Get<bool>(restockKey, false);
             GroceryTrip = Preferences.Default.Get<bool>(gtKey, false);
             GTAllowance = Preferences.Default.Get<int>(gtAllowKey, 0);
             InfiniteSpices = Preferences.Default.Get<bool>(infSpicesKey, false);
         }
-        public void Update(UserPreferences prefs)
+
+        //convert a comma-separated string into separate values
+        private List<string> StringToList(string listString)
         {
-            //save it in local storage
+            return listString.Split(',').ToList();
+        }
+
+        //convert a list of strings into a single comma-separated string
+        private string ListToString(List<string> list)
+        {
+            string result = "";
+            for(int ii = 0; ii < list.Count; ii++)
+            {
+                //don't put a comma after the last element
+                if ((ii + 1) != list.Count)
+                {
+                    result += list[ii] + ',';
+                }
+                else
+                {
+                    result += list[ii];
+                }
+            }
+
+            return result;
+        }
+        public void Save(UserPreferences prefs)
+        {
+            Preferences.Default.Set<bool>(foodTrackingKey, prefs.FoodTracking);
+            Preferences.Default.Set<bool>(notificationsKey, prefs.Notifications);
+            Preferences.Default.Set<string>(cuisineKey, ListToString(prefs.Cuisine));
+            Preferences.Default.Set<string>(dietaryKey, ListToString(prefs.Dietary));
+            Preferences.Default.Set<bool>(restockKey, prefs.Restock);
+            Preferences.Default.Set<bool>(gtKey, prefs.GroceryTrip);
+            Preferences.Default.Set<int>(gtAllowKey, prefs.GTAllowance);
+            Preferences.Default.Set<bool>(infSpicesKey, prefs.InfiniteSpices);
+
+            FoodTracking = Preferences.Default.Get<bool>(foodTrackingKey, false);
+            Notifications = Preferences.Default.Get<bool>(notificationsKey, false);
+
+            Cuisine = StringToList(Preferences.Default.Get<string>(cuisineKey, cuisineDefault));
+
+            Dietary = StringToList(Preferences.Default.Get<string>(dietaryKey, dietaryDefault));
+
+            Restock = Preferences.Default.Get<bool>(restockKey, false);
+            GroceryTrip = Preferences.Default.Get<bool>(gtKey, false);
+            GTAllowance = Preferences.Default.Get<int>(gtAllowKey, 0);
+            InfiniteSpices = Preferences.Default.Get<bool>(infSpicesKey, false);
+
         }
     }
 }

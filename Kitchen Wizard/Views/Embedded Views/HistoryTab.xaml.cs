@@ -1,13 +1,14 @@
 using Kitchen_Wizard.Data_Objects.Interfaces;
 using Kitchen_Wizard.Data_Objects;
 using Kitchen_Wizard.Models;
+using static Android.Graphics.ColorSpace;
 
 namespace Kitchen_Wizard.Views.Embedded_Views;
 
 public partial class HistoryTab : ContentPage
 {
     private IRecipeHelper recipeHelper;
-
+    FavoritesAndHistoryPageModel model;
     public HistoryTab(IRecipeHelper helper, FavoritesAndHistoryPageModel viewModel)
     {
         InitializeComponent();
@@ -15,6 +16,7 @@ public partial class HistoryTab : ContentPage
         recipeHelper = helper;
 
         BindingContext = viewModel;
+        model = viewModel;
     }
 
     private async void HistoryItemTapped(object sender, EventArgs e)
@@ -32,4 +34,5 @@ public partial class HistoryTab : ContentPage
             {"Recipe", recipe}
         });
     }
+
 }

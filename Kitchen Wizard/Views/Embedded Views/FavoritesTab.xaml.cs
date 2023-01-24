@@ -7,6 +7,7 @@ namespace Kitchen_Wizard.Views.Embedded_Views;
 public partial class FavoritesTab : ContentPage
 {
     private IRecipeHelper recipeHelper;
+    FavoritesAndHistoryPageModel model;
 	public FavoritesTab(IRecipeHelper helper, FavoritesAndHistoryPageModel viewModel)
 	{
 		InitializeComponent();
@@ -14,6 +15,8 @@ public partial class FavoritesTab : ContentPage
         recipeHelper = helper;
 
         BindingContext = viewModel;
+
+        model = viewModel;
 	}
 
 	private async void FavoritesItemTapped(object sender, EventArgs e)

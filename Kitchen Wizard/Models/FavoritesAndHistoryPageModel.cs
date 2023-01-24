@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using Kitchen_Wizard.Data_Objects;
 using Kitchen_Wizard.Data_Objects.Database_Helpers;
 using Kitchen_Wizard.Data_Objects.Interfaces;
@@ -18,6 +19,8 @@ namespace Kitchen_Wizard.Models
         {      
             Title = "Favorites and History";
             LoadData();
+            FavoritesIsRefreshing = false;
+            HistoryIsRefreshing = false;
            
         }
 
@@ -40,8 +43,34 @@ namespace Kitchen_Wizard.Models
             }
         }
 
+        [RelayCommand]
+        void RefreshFavorites()
+        {
+            FavoritesIsRefreshing = true;
+
+            LoadData();
+
+            FavoritesIsRefreshing = false;
+        }
+
+        [RelayCommand]
+        void RefreshHistory()
+        {
+            HistoryIsRefreshing = true;
+
+            LoadData();
+
+            HistoryIsRefreshing = false;
+        }
+
         public ObservableCollection<Recipe> Favorites { get; set; } = new();
         public ObservableCollection<Recipe> History { get; set; } = new();
 
-}
+        [ObservableProperty]
+        bool favoritesIsRefreshing;
+
+        [ObservableProperty]
+        bool historyIsRefreshing;
+
+    }
 }

@@ -12,9 +12,10 @@
             HorizontalOptions="Center"
             Text="Welcome to History"
             VerticalOptions="Center" />
-
-        <!--  Display search results  -->
-        <CollectionView
+        <RefreshView IsRefreshing="{Binding HistoryIsRefreshing}"
+             Command="{Binding RefreshHistoryCommand}">
+            <!--  Display search results  -->
+            <CollectionView
             x:Name="HistoryList"
             Grid.Row="2"
             Grid.ColumnSpan="2"
@@ -23,24 +24,24 @@
             SelectionMode="Single"
             EmptyView="History is empty. Get Cookin!">
 
-            <CollectionView.ItemsLayout>
-                <LinearItemsLayout ItemSpacing="10" Orientation="Vertical" />
-            </CollectionView.ItemsLayout>
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout ItemSpacing="10" Orientation="Vertical" />
+                </CollectionView.ItemsLayout>
 
-            <CollectionView.ItemTemplate>
-                <DataTemplate x:DataType="{x:Type object:Recipe}">
-                    <Grid>
-                        <Frame>
-                            <Frame.GestureRecognizers>
-                                <TapGestureRecognizer Tapped="HistoryItemTapped" />
-                            </Frame.GestureRecognizers>
-                            <Label FontSize="12" Text="{Binding Name}" />
-                        </Frame>
-                    </Grid>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
-
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="{x:Type object:Recipe}">
+                        <Grid>
+                            <Frame>
+                                <Frame.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="HistoryItemTapped" />
+                                </Frame.GestureRecognizers>
+                                <Label FontSize="12" Text="{Binding Name}" />
+                            </Frame>
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </RefreshView>
         <ActivityIndicator
             Grid.RowSpan="2"
             Grid.ColumnSpan="2"

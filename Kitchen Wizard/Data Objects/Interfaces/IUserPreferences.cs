@@ -23,7 +23,7 @@ namespace Kitchen_Wizard.Data_Objects.Interfaces
         //      or do I make a new one and grab the prefs every time I call the search function?
         //
         //      either way, the constructor should call Get() to populate the object
-        public void PopulateObject();
-        public void Update(UserPreferences prefs);
+        public void LoadPrefs();
+        public void Save(UserPreferences prefs);
     }
 }

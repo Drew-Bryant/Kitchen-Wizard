@@ -9,19 +9,24 @@ public partial class RecipeSearchPage : ContentPage
 {
 
 	private IRecipeHelper recipeHelper;
+	private RecipeSearchPageModel model;
 
-	public RecipeSearchPage(RecipeSearchPageModel viewModel, IRecipeHelper helper)
+    public RecipeSearchPage(RecipeSearchPageModel viewModel, IRecipeHelper helper)
 	{
         InitializeComponent();
 
         BindingContext = viewModel;
 		recipeHelper = helper;
+		model = viewModel;
+		model.LoadPrefs();
 	}
 
 
     private async void SearchOptionsClicked(object sender, EventArgs e)
     {
-		await Shell.Current.GoToAsync("SearchOptionsMenu");
+        model.LoadPrefs();
+        await Shell.Current.GoToAsync("SearchOptionsMenu");
+
     }
 
     private void SearchResultTapped(object sender, EventArgs e)

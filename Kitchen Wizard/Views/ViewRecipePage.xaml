@@ -6,7 +6,8 @@
     xmlns:object="clr-namespace:Kitchen_Wizard.Data_Objects"
     xmlns:viewmodel="clr-namespace:Kitchen_Wizard.Models"
     Title="{Binding Recipe.Name}"
-    x:DataType="viewmodel:ViewRecipePageModel">
+    x:DataType="viewmodel:ViewRecipePageModel"
+    Loaded="InitButtons">
     <!--  Add an item to the toolbar  -->
     <ContentPage.ToolbarItems>
         <!--  ToolbarItem for opening ingredients flyout, or swipe gesture  -->
@@ -16,59 +17,70 @@
 
     <VerticalStackLayout>
         <Grid
-            ColumnDefinitions=".4*, .2*, .4*"
-            RowDefinitions="Auto, *"
+            Margin="3"
+            ColumnDefinitions=".35*, .3*, .35*"
+            RowDefinitions="*, *"
             RowSpacing="10">
             <Button
                 Grid.Row="0"
                 Grid.Column="0"
                 Margin="10"
-                Command="{Binding AddToFavoritesCommand}"
-                IsVisible="{Binding Recipe.IsNotFavorite}"
-                Text="Add Favorite" />
+                Padding="-200"
+                Command="{Binding ToggleFavoriteCommand}"
+                HeightRequest="60"
+                LineBreakMode="WordWrap"
+                Text="{Binding FavoriteButtonText}" />
             <Button
                 Grid.Row="0"
-                Grid.Column="0"
+                Grid.Column="1"
                 Margin="10"
-                Command="{Binding RemoveFromFavoritesCommand}"
-                IsVisible="{Binding Recipe.IsFavorite}"
-                Text="Remove Favorite" />
-            <Button
-                Grid.Row="0"
-                Grid.Column="2"
-                Margin="10"
-                Command="{Binding AddToHistoryCommand}"
-                IsVisible="{Binding Recipe.IsNotHistory}"
-                Text="Add History" />
+                Command="{Binding ShareRecipeCommand}"
+                CommandParameter="{Binding Recipe}"
+                HeightRequest="60"
+                LineBreakMode="WordWrap"
+                Text="{Binding ShareButtonText}" />
             <Button
                 Grid.Row="0"
                 Grid.Column="2"
                 Margin="10"
-                Command="{Binding RemoveFromHistoryCommand}"
-                IsVisible="{Binding Recipe.IsHistory}"
-                Text="Remove History" />
+                Command="{Binding ToggleHistoryCommand}"
+                HeightRequest="60"
+                LineBreakMode="WordWrap"
+                Text="{Binding HistoryButtonText}" />
         </Grid>
-        <ScrollView VerticalOptions="FillAndExpand">
-            <VerticalStackLayout>
-                <Label Text="{Binding Recipe.Name}" />
-                <Label Text="{Binding Recipe.Author, StringFormat='Created By: {0}'}" />
-                <Label Text="{Binding Recipe.Source, StringFormat='Source Website: {0}'}" />
-                <Label Text="{Binding Recipe.Servings, StringFormat='Servings: {0}'}" />
-                <Label Text="{Binding Recipe.ID, StringFormat='Recipe With ID Number: {0}'}" />
-                <Label Text="{Binding Recipe.Description}" />
-                <CollectionView
-                    Grid.Row="2"
-                    Grid.Column="0"
-                    Grid.ColumnSpan="2"
-                    ItemsSource="{Binding Recipe.Steps}">
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate x:DataType="{x:Type x:String}">
-                            <Label Text="{Binding .}" />
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                </CollectionView>
-            </VerticalStackLayout>
-        </ScrollView>
+        <VerticalStackLayout>
+            <Label Text="{Binding Recipe.Name}" />
+            <Label Text="{Binding Recipe.Author, StringFormat='Created By: {0}'}" />
+            <Label Text="{Binding Recipe.Source, StringFormat='Source Website: {0}'}" />
+            <Label Text="{Binding Recipe.Servings, StringFormat='Servings: {0}'}" />
+            <Label Text="{Binding Recipe.ID, StringFormat='Recipe With ID Number: {0}'}" />
+            <Label Text="{Binding Recipe.Description}" />
+            <!--<ScrollView HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">-->
+
+            <CollectionView
+                Grid.Row="2"
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                ItemsSource="{Binding Recipe.Steps}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="{x:Type x:String}">
+                        <Label FontSize="40" Text="{Binding .}" />
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+            <!--<ListView
+                Grid.Row="2"
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                ItemsSource="{Binding Recipe.Steps}">
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="{x:Type x:String}">
+                        <Label FontSize="40" Text="{Binding .}" />
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>-->
+            <!--</ScrollView>-->
+        </VerticalStackLayout>
 
 
     </VerticalStackLayout>

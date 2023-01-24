@@ -25,5 +25,7 @@ namespace Kitchen_Wizard.Models
             FavoritesHistoryDBHelper.ClearHistory();
         }
 
+        //reset preferences button
+
     }
 }

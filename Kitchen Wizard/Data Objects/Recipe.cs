@@ -17,13 +17,16 @@ namespace Kitchen_Wizard.Data_Objects
         public string Source { get; set; }
         public int Servings { get; set; }
         public bool IsFavorite { get; set; }
-        public bool IsNotFavorite { get; set; }
+
         public bool IsHistory { get; set; }
-        public bool IsNotHistory { get; set; }
+
         public int ID { get; set; }
         public CuisineType Cuisine { get; set; }
 
         public List<DietaryRestrictions> Dietary { get; set; }
+
+        public DateTime CreationDate { get; set; }
+        public DateTime HistoryDate { get; set; }
 
         public void AdjustServings(int newServings)
         {

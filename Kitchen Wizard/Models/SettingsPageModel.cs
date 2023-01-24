@@ -4,19 +4,16 @@ using Kitchen_Wizard.Data_Objects;
 using Kitchen_Wizard.Data_Objects.Interfaces;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Kitchen_Wizard.Models
 {
-    public partial class RecipeSearchPageModel : IKitchenWizardViewModel
+    public partial class SettingsPageModel : IKitchenWizardViewModel
     {
-        private ISearchHelper searchHelper;
-        private IFoodListHelper foodListHelper;
-        private IRecipeHelper recipeHelper;
-        private IUserPreferences userPrefs;
+        [ObservableProperty]
+        UserPreferences userPreferences = new();
 
         //for managing options checkboxes
         [ObservableProperty]
@@ -41,45 +38,23 @@ namespace Kitchen_Wizard.Models
         bool veganChecked = false;
         [ObservableProperty]
         bool vegetarianChecked = false;
-
-        
-        public List<string> CuisineStrings { get; set; } = new List<string>() 
+        public List<string> CuisineStrings { get; set; } = new List<string>()
         { CuisineType.Any.ToString(), CuisineType.Mexican.ToString(), CuisineType.Italian.ToString(), CuisineType.Asian.ToString(), CuisineType.Indian.ToString(), CuisineType.American.ToString() };
         public List<string> DietaryStrings { get; set; } = new List<string>()
         { DietaryRestrictions.None.ToString(), DietaryRestrictions.Gluten_Free.ToString(), DietaryRestrictions.Keto.ToString(), DietaryRestrictions.Vegan.ToString(), DietaryRestrictions.Vegetarian.ToString()};
 
-        [ObservableProperty]
-        public UserPreferences searchOptions = new();
-
-        [ObservableProperty]
-        public EnumOptions enumOptions;
-
-        public ObservableCollection<Recipe> SearchResults { get; set; } = new();
-
-        [ObservableProperty]
-        string searchField;
-
-        public RecipeSearchPageModel(ISearchHelper _searchHelper, IFoodListHelper _foodListHelper, IRecipeHelper _recipeHelper, IUserPreferences _userPrefs)
+        IUserPreferences prefsHelper;
+        public SettingsPageModel(IUserPreferences _prefs)
         {
-            searchHelper = _searchHelper;
-            foodListHelper = _foodListHelper;
-            recipeHelper = _recipeHelper;
-            userPrefs = _userPrefs;
+            prefsHelper = _prefs;
+            UserPreferences.LoadPrefs();
 
-            //LoadPrefs();
+            Title = "App Preferences";
 
-
-            Title = "Recipe Search";
-
-            //TODO: Initialize search options to app defaults or user preferences if set
-
-        }
-
-        public void LoadPrefs()
-        {
-            SearchOptions.LoadPrefs();
             SetDefaultOptions();
         }
+
+
         public void SetDefaultOptions()
         {
             AnyChecked = false;
@@ -94,7 +69,7 @@ namespace Kitchen_Wizard.Models
             VeganChecked = false;
             VegetarianChecked = false;
 
-            foreach (var option in SearchOptions.Cuisine)
+            foreach (var option in UserPreferences.Cuisine)
             {
                 CuisineType value;
                 Enum.TryParse<CuisineType>(option, out value);
@@ -122,7 +97,7 @@ namespace Kitchen_Wizard.Models
 
             }
 
-            foreach (var option in SearchOptions.Dietary)
+            foreach (var option in UserPreferences.Dietary)
             {
                 DietaryRestrictions value;
                 Enum.TryParse<DietaryRestrictions>(option, out value);
@@ -148,35 +123,17 @@ namespace Kitchen_Wizard.Models
             }
         }
         [RelayCommand]
-        void KeywordSearch(string keyword)
-        {
-            SearchResults.Clear();
-            //do the search here
-
-            LoadPrefs();
-
-            var results = searchHelper.SearchRecipeByKeyword(keyword, SearchOptions);
-
-            foreach(var recipe in results)
-            {
-                SearchResults.Add(recipe);
-            }
-        }
-
-
-
-        [RelayCommand]
         public void ToggleCuisine(string name)
         {
             //indicates whether the control was turned on or off
             bool selected = false;
-            if (SearchOptions.Cuisine.Contains(name))
+            if (UserPreferences.Cuisine.Contains(name))
             {
-                SearchOptions.Cuisine.Remove(name);
+                UserPreferences.Cuisine.Remove(name);
             }
             else
             {
-                SearchOptions.Cuisine.Add(name);
+                UserPreferences.Cuisine.Add(name);
                 selected = true;
             }
 
@@ -196,11 +153,11 @@ namespace Kitchen_Wizard.Models
                         ItalianChecked = false;
                         IndianChecked = false;
                         AmericanChecked = false;
-                        SearchOptions.Cuisine.Remove(CuisineType.Mexican.ToString());
-                        SearchOptions.Cuisine.Remove(CuisineType.Asian.ToString());
-                        SearchOptions.Cuisine.Remove(CuisineType.Italian.ToString());
-                        SearchOptions.Cuisine.Remove(CuisineType.Indian.ToString());
-                        SearchOptions.Cuisine.Remove(CuisineType.American.ToString());
+                        UserPreferences.Cuisine.Remove(CuisineType.Mexican.ToString());
+                        UserPreferences.Cuisine.Remove(CuisineType.Asian.ToString());
+                        UserPreferences.Cuisine.Remove(CuisineType.Italian.ToString());
+                        UserPreferences.Cuisine.Remove(CuisineType.Indian.ToString());
+                        UserPreferences.Cuisine.Remove(CuisineType.American.ToString());
                     }
                     break;
                 case CuisineType.Mexican:
@@ -209,7 +166,7 @@ namespace Kitchen_Wizard.Models
                     if (selected)
                     {
                         AnyChecked = false;
-                        bool result = SearchOptions.Cuisine.Remove(CuisineType.Any.ToString());
+                        bool result = UserPreferences.Cuisine.Remove(CuisineType.Any.ToString());
                     }
                     break;
                 case CuisineType.Italian:
@@ -218,7 +175,7 @@ namespace Kitchen_Wizard.Models
                     if (selected)
                     {
                         AnyChecked = false;
-                        SearchOptions.Cuisine.Remove(CuisineType.Any.ToString());
+                        UserPreferences.Cuisine.Remove(CuisineType.Any.ToString());
                     }
                     break;
                 case CuisineType.Asian:
@@ -227,7 +184,7 @@ namespace Kitchen_Wizard.Models
                     if (selected)
                     {
                         AnyChecked = false;
-                        SearchOptions.Cuisine.Remove(CuisineType.Any.ToString());
+                        UserPreferences.Cuisine.Remove(CuisineType.Any.ToString());
                     }
                     break;
                 case CuisineType.Indian:
@@ -236,7 +193,7 @@ namespace Kitchen_Wizard.Models
                     if (selected)
                     {
                         AnyChecked = false;
-                        SearchOptions.Cuisine.Remove(CuisineType.Any.ToString());
+                        UserPreferences.Cuisine.Remove(CuisineType.Any.ToString());
                     }
                     break;
                 case CuisineType.American:
@@ -245,12 +202,12 @@ namespace Kitchen_Wizard.Models
                     if (selected)
                     {
                         AnyChecked = false;
-                        SearchOptions.Cuisine.Remove(CuisineType.Any.ToString());
+                        UserPreferences.Cuisine.Remove(CuisineType.Any.ToString());
                     }
                     break;
             }
 
-            
+            prefsHelper.Save(UserPreferences);
         }
 
         [RelayCommand]
@@ -258,13 +215,13 @@ namespace Kitchen_Wizard.Models
         {
             //indicates whether the control was turned on or off
             bool selected = false;
-            if (SearchOptions.Dietary.Contains(name))
+            if (UserPreferences.Dietary.Contains(name))
             {
-                SearchOptions.Dietary.Remove(name);
+                UserPreferences.Dietary.Remove(name);
             }
             else
             {
-                SearchOptions.Dietary.Add(name);
+                UserPreferences.Dietary.Add(name);
                 selected = true;
             }
 
@@ -282,10 +239,10 @@ namespace Kitchen_Wizard.Models
                         KetoChecked = false;
                         VeganChecked = false;
                         VegetarianChecked = false;
-                        SearchOptions.Dietary.Remove(DietaryRestrictions.Gluten_Free.ToString());
-                        SearchOptions.Dietary.Remove(DietaryRestrictions.Keto.ToString());
-                        SearchOptions.Dietary.Remove(DietaryRestrictions.Vegan.ToString());
-                        SearchOptions.Dietary.Remove(DietaryRestrictions.Vegetarian.ToString());
+                        UserPreferences.Dietary.Remove(DietaryRestrictions.Gluten_Free.ToString());
+                        UserPreferences.Dietary.Remove(DietaryRestrictions.Keto.ToString());
+                        UserPreferences.Dietary.Remove(DietaryRestrictions.Vegan.ToString());
+                        UserPreferences.Dietary.Remove(DietaryRestrictions.Vegetarian.ToString());
                     }
                     break;
                 case DietaryRestrictions.Gluten_Free:
@@ -294,7 +251,7 @@ namespace Kitchen_Wizard.Models
                     if (selected)
                     {
                         NoneChecked = false;
-                        SearchOptions.Dietary.Remove(DietaryRestrictions.None.ToString());
+                        UserPreferences.Dietary.Remove(DietaryRestrictions.None.ToString());
                     }
                     break;
                 case DietaryRestrictions.Keto:
@@ -302,7 +259,7 @@ namespace Kitchen_Wizard.Models
                     if (selected)
                     {
                         NoneChecked = false;
-                        SearchOptions.Dietary.Remove(DietaryRestrictions.None.ToString());
+                        UserPreferences.Dietary.Remove(DietaryRestrictions.None.ToString());
                     }
                     break;
                 case DietaryRestrictions.Vegan:
@@ -311,7 +268,7 @@ namespace Kitchen_Wizard.Models
                     if (selected)
                     {
                         NoneChecked = false;
-                        SearchOptions.Dietary.Remove(DietaryRestrictions.None.ToString());
+                        UserPreferences.Dietary.Remove(DietaryRestrictions.None.ToString());
                     }
                     break;
                 case DietaryRestrictions.Vegetarian:
@@ -319,11 +276,12 @@ namespace Kitchen_Wizard.Models
                     if (selected)
                     {
                         NoneChecked = false;
-                        SearchOptions.Dietary.Remove(DietaryRestrictions.None.ToString());
+                        UserPreferences.Dietary.Remove(DietaryRestrictions.None.ToString());
                     }
                     break;
             }
-        }
 
+            prefsHelper.Save(UserPreferences);
+        }
     }
 }

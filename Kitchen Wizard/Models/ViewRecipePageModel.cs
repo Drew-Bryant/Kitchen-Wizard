@@ -4,6 +4,7 @@ using Kitchen_Wizard.Data_Objects;
 using Kitchen_Wizard.Data_Objects.Database_Helpers;
 using Kitchen_Wizard.Data_Objects.Interfaces;
 using Kitchen_Wizard.Views.Embedded_Views;
+using Microsoft.Maui.ApplicationModel.DataTransfer;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -18,15 +19,43 @@ namespace Kitchen_Wizard.Models
     public partial class ViewRecipePageModel : IKitchenWizardViewModel
     {
 
+        public static string NotFavoriteString { get; set; } = "Add\nFavorite";
+        public static string FavoriteString { get; set; } = "Remove\nFavorite";
+
+        public static string NotHistoryString { get; set; } = "Make This\nRecipe";
+        public static string ShareString { get; set; } = "Share\nRecipe";
+
+
         [ObservableProperty]
         Recipe recipe;
 
+        [ObservableProperty]
+        string shareButtonText = ShareString;
+        [ObservableProperty]
+        string favoriteButtonText = NotFavoriteString;
+
+        [ObservableProperty]
+        string historyButtonText = NotHistoryString;
+
+        public void InitButtons()
+        {
+            if(Recipe.IsFavorite)
+            {
+                FavoriteButtonText = FavoriteString;
+            }
+
+            if(Recipe.IsHistory)
+            {
+                Recipe.HistoryDate = FavoritesHistoryDBHelper.GetHistoryDate(Recipe);
+                HistoryButtonText = $"Made on\n{Recipe.HistoryDate.ToString("MM/dd/yyyy")}";
+            }
+        }
         [RelayCommand]
         void AddToFavorites()
-        { 
+        {
             FavoritesHistoryDBHelper.AddFavorite(Recipe);
             Recipe.IsFavorite = true;
-
+            FavoriteButtonText = FavoriteString;
         }
 
         [RelayCommand]
@@ -34,12 +63,48 @@ namespace Kitchen_Wizard.Models
         {
             FavoritesHistoryDBHelper.RemoveFavorite(Recipe);
             Recipe.IsFavorite = false;
+            FavoriteButtonText = NotFavoriteString;
+        }
+
+        [RelayCommand]
+        void ToggleFavorite()
+        {
+            if (Recipe.IsFavorite)
+            {
+                FavoritesHistoryDBHelper.RemoveFavorite(Recipe);
+                Recipe.IsFavorite = false;
+                FavoriteButtonText = NotFavoriteString;
+            }
+            else
+            {
+                FavoritesHistoryDBHelper.AddFavorite(Recipe);
+                Recipe.IsFavorite = true;
+                FavoriteButtonText = FavoriteString;
+            }
+        }
+
+        [RelayCommand]
+        void ToggleHistory()
+        {
+            if(Recipe.IsHistory)
+            {
+                FavoritesHistoryDBHelper.RemoveHistory(Recipe);
+                Recipe.IsHistory = false;
+                HistoryButtonText = NotHistoryString;
+            }
+            else
+            {
+                Recipe.HistoryDate = DateTime.Now;
+                FavoritesHistoryDBHelper.AddHistory(Recipe);
+                Recipe.IsHistory = true;
+                HistoryButtonText = $"Made on\n {Recipe.HistoryDate.ToString("MM/dd/yyyy")}";
+            }
         }
 
         [RelayCommand]
         void AddToHistory()
         {
-            FavoritesHistoryDBHelper.AddHistory(Recipe);
+            Recipe.HistoryDate = FavoritesHistoryDBHelper.AddHistory(Recipe);
             Recipe.IsHistory = true;
 
         }
@@ -51,6 +116,15 @@ namespace Kitchen_Wizard.Models
             Recipe.IsHistory = false;
         }
 
+        [RelayCommand]
+        async void ShareRecipe(Recipe recipe)
+        {
+            await Share.Default.RequestAsync(new ShareTextRequest
+            {
+                Uri = recipe.Source,
+                Title = "Choose where to share this recipe"
+            });
+        }
 
     }
 }

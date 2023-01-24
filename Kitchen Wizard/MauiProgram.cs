@@ -33,15 +33,12 @@ public static class MauiProgram
         builder.Services.AddTransient<ISearchHelper, StaticSearchHelper>();
         builder.Services.AddTransient<IRecipeHelper, StaticRecipeHelper>();
 
-
-
-
-
         //register views for dependency injection
         builder.Services.AddTransient<RecipeSearchPage>();
 		builder.Services.AddTransient<ViewRecipePage>();
         builder.Services.AddTransient<FavoritesAndHistoryPage>();
         builder.Services.AddTransient<DatabaseManagement>();
+        builder.Services.AddTransient<SettingsPage>();
 
         //embedded views
         builder.Services.AddTransient<FavoritesTab>();
@@ -54,6 +51,7 @@ public static class MauiProgram
 		builder.Services.AddSingleton<ViewRecipePageModel>();
         builder.Services.AddTransient<FavoritesAndHistoryPageModel>();
         builder.Services.AddTransient<DatabaseManagementPageModel>();
+        builder.Services.AddTransient<SettingsPageModel>();
         return builder.Build();
 	}
 }
