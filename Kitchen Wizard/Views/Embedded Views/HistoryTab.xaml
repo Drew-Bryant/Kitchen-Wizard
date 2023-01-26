@@ -12,25 +12,26 @@
             HorizontalOptions="Center"
             Text="Welcome to History"
             VerticalOptions="Center" />
-        <RefreshView IsRefreshing="{Binding HistoryIsRefreshing}"
-             Command="{Binding RefreshHistoryCommand}"
-                     IsEnabled="True">
+        <RefreshView
+            Command="{Binding RefreshHistoryCommand}"
+            IsEnabled="True"
+            IsRefreshing="{Binding HistoryIsRefreshing}">
             <!--  Display search results  -->
             <CollectionView
-            x:Name="HistoryList"
-            Grid.Row="2"
-            Grid.ColumnSpan="2"
-            Margin="20"
-            ItemsSource="{Binding History}"
-            SelectionMode="Single"
-            EmptyView="History is empty. Get Cookin!">
+                x:Name="HistoryList"
+                Grid.Row="2"
+                Grid.ColumnSpan="2"
+                Margin="20"
+                EmptyView="History is empty. Get Cookin!"
+                ItemsSource="{Binding History}"
+                SelectionMode="Single">
 
                 <CollectionView.ItemsLayout>
                     <LinearItemsLayout ItemSpacing="10" Orientation="Vertical" />
                 </CollectionView.ItemsLayout>
 
                 <CollectionView.ItemTemplate>
-                    <DataTemplate x:DataType="{x:Type object:Recipe}">
+                    <DataTemplate x:DataType="{x:Type object:RecipeClass}">
                         <Grid>
                             <Frame>
                                 <Frame.GestureRecognizers>

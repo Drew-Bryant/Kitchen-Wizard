@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace Kitchen_Wizard.Models
 {
-    [QueryProperty(nameof(Recipe), "Recipe")]
+    [QueryProperty("Recipe", "Recipe")]
     public partial class ViewRecipePageModel : IKitchenWizardViewModel
     {
 
@@ -27,10 +27,12 @@ namespace Kitchen_Wizard.Models
 
 
         [ObservableProperty]
-        Recipe recipe;
+        RecipeClass recipe;
 
         public ObservableCollection<string> Steps { get; set; } = new();
 
+        //[ObservableProperty]
+        //string shareButtonText = ShareString;
         [ObservableProperty]
         string shareButtonText = ShareString;
         [ObservableProperty]
@@ -39,8 +41,11 @@ namespace Kitchen_Wizard.Models
         [ObservableProperty]
         string historyButtonText = NotHistoryString;
 
-        public void InitButtons()
+        public void InitProperties()
         {
+            FavoriteButtonText = NotFavoriteString;
+            HistoryButtonText = NotHistoryString;
+
             if(Recipe.IsFavorite)
             {
                 FavoriteButtonText = FavoriteString;
@@ -53,6 +58,7 @@ namespace Kitchen_Wizard.Models
             }
 
             Steps.Clear();
+
             foreach(var step in Recipe.Steps)
             {
                 Steps.Add(step);
@@ -127,7 +133,7 @@ namespace Kitchen_Wizard.Models
         }
 
         [RelayCommand]
-        async void ShareRecipe(Recipe recipe)
+        async void ShareRecipe(RecipeClass recipe)
         {
             await Share.Default.RequestAsync(new ShareTextRequest
             {

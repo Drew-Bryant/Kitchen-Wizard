@@ -36,7 +36,7 @@ namespace Kitchen_Wizard.Data_Objects
         public Unit Units { get; set; }
         public string Name { get; set; }
         public bool IsSpice { get; set; }
-        public bool ID { get; set; }
+        public int ID { get; set; }
 
         public void ConvertTo(Unit units)
         {

@@ -9,17 +9,17 @@ namespace Kitchen_Wizard.Data_Objects.Database_Helpers
 {
     public class RecipeDBHelper : IRecipeHelper
     {
-        public Recipe GetFullByID(int recipeID)
+        public RecipeClass GetFullByID(int recipeID)
         {
             throw new NotImplementedException();
         }
 
-        public Recipe GetFullByName(string recipeName)
+        public RecipeClass GetFullByName(string recipeName)
         {
             throw new NotImplementedException();
         }
 
-        public Recipe GetPartialByID(int recipeID)
+        public RecipeClass GetPartialByID(int recipeID)
         {
             throw new NotImplementedException();
         }

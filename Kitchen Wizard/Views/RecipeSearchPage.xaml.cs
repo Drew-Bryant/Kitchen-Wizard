@@ -1,6 +1,7 @@
 using Kitchen_Wizard.Data_Objects;
 using Kitchen_Wizard.Data_Objects.Interfaces;
 using Kitchen_Wizard.Models;
+using Kitchen_Wizard.Views.Embedded_Views;
 using System.Collections.ObjectModel;
 
 namespace Kitchen_Wizard.Views;
@@ -27,13 +28,13 @@ public partial class RecipeSearchPage : ContentPage
     private async void SearchOptionsClicked(object sender, EventArgs e)
     {
         model.SetDefaultOptions();
-        await Shell.Current.GoToAsync("SearchOptionsMenu");
+        await Shell.Current.GoToAsync(nameof(SearchOptionsMenu));
 
     }
 
     private void SearchResultTapped(object sender, EventArgs e)
 	{
-		Recipe recipe = ((VisualElement)sender).BindingContext as Recipe;
+		RecipeClass recipe = ((VisualElement)sender).BindingContext as RecipeClass;
 
 		//should never happen...sanity check
 		if (recipe == null)
@@ -46,5 +47,28 @@ public partial class RecipeSearchPage : ContentPage
 			{"Recipe", recipe},
 		});
 	}
-
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+        if (!model.IsBack)
+        {
+            model.LoadPrefs();
+        }
+        else
+        {
+            model.IsBack = false;
+        }
+        //a piece of code specified
+    }
+    private void SetOptions(object sender, EventArgs e)
+	{
+		if (!model.IsBack)
+		{
+			model.LoadPrefs();
+		}
+		else
+		{
+			model.IsBack = false;
+		}
+	}
 }

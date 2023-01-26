@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 
 namespace Kitchen_Wizard.Models
 {
+    [QueryProperty("IsBack", "IsBack")]
     public partial class RecipeSearchPageModel : IKitchenWizardViewModel
     {
         private ISearchHelper searchHelper;
@@ -54,10 +55,12 @@ namespace Kitchen_Wizard.Models
         [ObservableProperty]
         public EnumOptions enumOptions;
 
-        public ObservableCollection<Recipe> SearchResults { get; set; } = new();
+        public ObservableCollection<RecipeClass> SearchResults { get; set; } = new();
 
         [ObservableProperty]
         string searchField;
+
+        public bool IsBack { get; set; } = false;
 
         public RecipeSearchPageModel(ISearchHelper _searchHelper, IFoodListHelper _foodListHelper, IRecipeHelper _recipeHelper, IUserPreferences _userPrefs)
         {
@@ -68,7 +71,10 @@ namespace Kitchen_Wizard.Models
 
             Title = "Recipe Search";
 
-            LoadPrefs();
+            if (!IsBack)
+            {
+                LoadPrefs();
+            }
 
         }
 
@@ -76,6 +82,7 @@ namespace Kitchen_Wizard.Models
         {
             SearchOptions.LoadPrefs();
         }
+
         public void SetDefaultOptions()
         {
             AnyChecked = false;

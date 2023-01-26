@@ -17,9 +17,14 @@ public partial class HistoryTab : ContentPage
         model = viewModel;
     }
 
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+        model.LoadHistory();
+    }
     private async void HistoryItemTapped(object sender, EventArgs e)
     {
-        Recipe recipe = ((VisualElement)sender).BindingContext as Recipe;
+        RecipeClass recipe = ((VisualElement)sender).BindingContext as RecipeClass;
 
         //should never happen...sanity check
         if (recipe == null)

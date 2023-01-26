@@ -13,7 +13,7 @@ namespace Kitchen_Wizard.Models
     public partial class SettingsPageModel : IKitchenWizardViewModel
     {
         [ObservableProperty]
-        UserPreferences userPreferences = new();
+        UserPreferences userPrefs = new();
 
         //for managing options checkboxes
         [ObservableProperty]
@@ -47,7 +47,7 @@ namespace Kitchen_Wizard.Models
         public SettingsPageModel(IUserPreferences _prefs)
         {
             prefsHelper = _prefs;
-            UserPreferences.LoadPrefs();
+            UserPrefs.LoadPrefs();
 
             Title = "App Preferences";
 
@@ -69,7 +69,7 @@ namespace Kitchen_Wizard.Models
             VeganChecked = false;
             VegetarianChecked = false;
 
-            foreach (var option in UserPreferences.Cuisine)
+            foreach (var option in UserPrefs.Cuisine)
             {
                 CuisineType value;
                 Enum.TryParse<CuisineType>(option, out value);
@@ -97,7 +97,7 @@ namespace Kitchen_Wizard.Models
 
             }
 
-            foreach (var option in UserPreferences.Dietary)
+            foreach (var option in UserPrefs.Dietary)
             {
                 DietaryRestrictions value;
                 Enum.TryParse<DietaryRestrictions>(option, out value);
@@ -127,13 +127,13 @@ namespace Kitchen_Wizard.Models
         {
             //indicates whether the control was turned on or off
             bool selected = false;
-            if (UserPreferences.Cuisine.Contains(name))
+            if (UserPrefs.Cuisine.Contains(name))
             {
-                UserPreferences.Cuisine.Remove(name);
+                UserPrefs.Cuisine.Remove(name);
             }
             else
             {
-                UserPreferences.Cuisine.Add(name);
+                UserPrefs.Cuisine.Add(name);
                 selected = true;
             }
 
@@ -153,11 +153,11 @@ namespace Kitchen_Wizard.Models
                         ItalianChecked = false;
                         IndianChecked = false;
                         AmericanChecked = false;
-                        UserPreferences.Cuisine.Remove(CuisineType.Mexican.ToString());
-                        UserPreferences.Cuisine.Remove(CuisineType.Asian.ToString());
-                        UserPreferences.Cuisine.Remove(CuisineType.Italian.ToString());
-                        UserPreferences.Cuisine.Remove(CuisineType.Indian.ToString());
-                        UserPreferences.Cuisine.Remove(CuisineType.American.ToString());
+                        UserPrefs.Cuisine.Remove(CuisineType.Mexican.ToString());
+                        UserPrefs.Cuisine.Remove(CuisineType.Asian.ToString());
+                        UserPrefs.Cuisine.Remove(CuisineType.Italian.ToString());
+                        UserPrefs.Cuisine.Remove(CuisineType.Indian.ToString());
+                        UserPrefs.Cuisine.Remove(CuisineType.American.ToString());
                     }
                     break;
                 case CuisineType.Mexican:
@@ -166,7 +166,7 @@ namespace Kitchen_Wizard.Models
                     if (selected)
                     {
                         AnyChecked = false;
-                        bool result = UserPreferences.Cuisine.Remove(CuisineType.Any.ToString());
+                        bool result = UserPrefs.Cuisine.Remove(CuisineType.Any.ToString());
                     }
                     break;
                 case CuisineType.Italian:
@@ -175,7 +175,7 @@ namespace Kitchen_Wizard.Models
                     if (selected)
                     {
                         AnyChecked = false;
-                        UserPreferences.Cuisine.Remove(CuisineType.Any.ToString());
+                        UserPrefs.Cuisine.Remove(CuisineType.Any.ToString());
                     }
                     break;
                 case CuisineType.Asian:
@@ -184,7 +184,7 @@ namespace Kitchen_Wizard.Models
                     if (selected)
                     {
                         AnyChecked = false;
-                        UserPreferences.Cuisine.Remove(CuisineType.Any.ToString());
+                        UserPrefs.Cuisine.Remove(CuisineType.Any.ToString());
                     }
                     break;
                 case CuisineType.Indian:
@@ -193,7 +193,7 @@ namespace Kitchen_Wizard.Models
                     if (selected)
                     {
                         AnyChecked = false;
-                        UserPreferences.Cuisine.Remove(CuisineType.Any.ToString());
+                        UserPrefs.Cuisine.Remove(CuisineType.Any.ToString());
                     }
                     break;
                 case CuisineType.American:
@@ -202,12 +202,12 @@ namespace Kitchen_Wizard.Models
                     if (selected)
                     {
                         AnyChecked = false;
-                        UserPreferences.Cuisine.Remove(CuisineType.Any.ToString());
+                        UserPrefs.Cuisine.Remove(CuisineType.Any.ToString());
                     }
                     break;
             }
 
-            prefsHelper.Save(UserPreferences);
+            prefsHelper.Save(UserPrefs);
         }
 
         [RelayCommand]
@@ -215,13 +215,13 @@ namespace Kitchen_Wizard.Models
         {
             //indicates whether the control was turned on or off
             bool selected = false;
-            if (UserPreferences.Dietary.Contains(name))
+            if (UserPrefs.Dietary.Contains(name))
             {
-                UserPreferences.Dietary.Remove(name);
+                UserPrefs.Dietary.Remove(name);
             }
             else
             {
-                UserPreferences.Dietary.Add(name);
+                UserPrefs.Dietary.Add(name);
                 selected = true;
             }
 
@@ -239,10 +239,10 @@ namespace Kitchen_Wizard.Models
                         KetoChecked = false;
                         VeganChecked = false;
                         VegetarianChecked = false;
-                        UserPreferences.Dietary.Remove(DietaryRestrictions.Gluten_Free.ToString());
-                        UserPreferences.Dietary.Remove(DietaryRestrictions.Keto.ToString());
-                        UserPreferences.Dietary.Remove(DietaryRestrictions.Vegan.ToString());
-                        UserPreferences.Dietary.Remove(DietaryRestrictions.Vegetarian.ToString());
+                        UserPrefs.Dietary.Remove(DietaryRestrictions.Gluten_Free.ToString());
+                        UserPrefs.Dietary.Remove(DietaryRestrictions.Keto.ToString());
+                        UserPrefs.Dietary.Remove(DietaryRestrictions.Vegan.ToString());
+                        UserPrefs.Dietary.Remove(DietaryRestrictions.Vegetarian.ToString());
                     }
                     break;
                 case DietaryRestrictions.Gluten_Free:
@@ -251,7 +251,7 @@ namespace Kitchen_Wizard.Models
                     if (selected)
                     {
                         NoneChecked = false;
-                        UserPreferences.Dietary.Remove(DietaryRestrictions.None.ToString());
+                        UserPrefs.Dietary.Remove(DietaryRestrictions.None.ToString());
                     }
                     break;
                 case DietaryRestrictions.Keto:
@@ -259,7 +259,7 @@ namespace Kitchen_Wizard.Models
                     if (selected)
                     {
                         NoneChecked = false;
-                        UserPreferences.Dietary.Remove(DietaryRestrictions.None.ToString());
+                        UserPrefs.Dietary.Remove(DietaryRestrictions.None.ToString());
                     }
                     break;
                 case DietaryRestrictions.Vegan:
@@ -268,7 +268,7 @@ namespace Kitchen_Wizard.Models
                     if (selected)
                     {
                         NoneChecked = false;
-                        UserPreferences.Dietary.Remove(DietaryRestrictions.None.ToString());
+                        UserPrefs.Dietary.Remove(DietaryRestrictions.None.ToString());
                     }
                     break;
                 case DietaryRestrictions.Vegetarian:
@@ -276,12 +276,12 @@ namespace Kitchen_Wizard.Models
                     if (selected)
                     {
                         NoneChecked = false;
-                        UserPreferences.Dietary.Remove(DietaryRestrictions.None.ToString());
+                        UserPrefs.Dietary.Remove(DietaryRestrictions.None.ToString());
                     }
                     break;
             }
 
-            prefsHelper.Save(UserPreferences);
+            prefsHelper.Save(UserPrefs);
         }
     }
 }

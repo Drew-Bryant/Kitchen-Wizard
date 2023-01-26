@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Kitchen_Wizard.Views.Embedded_Views.FoodListSearchPage"
+             xmlns:viewmodel="clr-namespace:Kitchen_Wizard.Models"
+             xmlns:object="clr-namespace:Kitchen_Wizard.Data_Objects"
+             x:DataType="viewmodel:FoodListPageModel" 
+             Title="Search For Foods">
+    <VerticalStackLayout>
+        <!--basically just copy over the search page and repurpose it to show foodlistitems-->
+        
+    </VerticalStackLayout>
+</ContentPage>

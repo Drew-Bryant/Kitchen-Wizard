@@ -29,7 +29,7 @@
                     <LinearItemsLayout ItemSpacing="10" Orientation="Vertical" />
                 </CollectionView.ItemsLayout>
                 <CollectionView.ItemTemplate>
-                    <DataTemplate x:DataType="{x:Type object:Recipe}">
+                    <DataTemplate x:DataType="{x:Type object:RecipeClass}">
                         <Grid>
                             <Frame>
                                 <Frame.GestureRecognizers>

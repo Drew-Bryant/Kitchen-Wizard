@@ -6,7 +6,8 @@
     xmlns:object="clr-namespace:Kitchen_Wizard.Data_Objects"
     xmlns:viewmodel="clr-namespace:Kitchen_Wizard.Models"
     Title="{Binding Title}"
-    x:DataType="viewmodel:RecipeSearchPageModel">
+    x:DataType="viewmodel:RecipeSearchPageModel"
+    Loaded="SetOptions">
     <ContentPage.ToolbarItems>
         <ToolbarItem Clicked="SearchOptionsClicked" Text="Options" />
         <!--
@@ -61,7 +62,7 @@
             </CollectionView.ItemsLayout>
 
             <CollectionView.ItemTemplate>
-                <DataTemplate x:DataType="{x:Type object:Recipe}">
+                <DataTemplate x:DataType="{x:Type object:RecipeClass}">
                     <Grid>
                         <Frame>
                             <Frame.GestureRecognizers>

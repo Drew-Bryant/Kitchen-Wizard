@@ -37,6 +37,7 @@ public static class MauiProgram
         builder.Services.AddTransient<RecipeSearchPage>();
 		builder.Services.AddTransient<ViewRecipePage>();
         builder.Services.AddTransient<FavoritesAndHistoryPage>();
+        builder.Services.AddTransient<FoodListPage>();
         builder.Services.AddTransient<DatabaseManagement>();
         builder.Services.AddTransient<SettingsPage>();
 
@@ -52,6 +53,7 @@ public static class MauiProgram
         builder.Services.AddTransient<FavoritesAndHistoryPageModel>();
         builder.Services.AddTransient<DatabaseManagementPageModel>();
         builder.Services.AddTransient<SettingsPageModel>();
+        builder.Services.AddTransient<FoodListPageModel>();
         return builder.Build();
 	}
 }

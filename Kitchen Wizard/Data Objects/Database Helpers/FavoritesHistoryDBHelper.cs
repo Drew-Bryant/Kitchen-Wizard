@@ -44,7 +44,7 @@ namespace Kitchen_Wizard.Data_Objects.Database_Helpers
             db.CreateTable<HistoryDBItem>();
         }
 
-        public static void AddFavorite(Recipe recipe)
+        public static void AddFavorite(RecipeClass recipe)
         {
             Init();
             var dbItem = new FavoritesDBItem();
@@ -54,7 +54,7 @@ namespace Kitchen_Wizard.Data_Objects.Database_Helpers
 
         }
 
-        public static DateTime AddHistory(Recipe recipe)
+        public static DateTime AddHistory(RecipeClass recipe)
         {
             Init();
 
@@ -70,14 +70,14 @@ namespace Kitchen_Wizard.Data_Objects.Database_Helpers
         }
 
 
-        public static void RemoveFavorite(Recipe recipe)
+        public static void RemoveFavorite(RecipeClass recipe)
         {
             Init();
 
             db.Delete<FavoritesDBItem>(recipe.ID);
         }
 
-        public static void RemoveHistory(Recipe recipe)
+        public static void RemoveHistory(RecipeClass recipe)
         {
             Init();
 
@@ -85,17 +85,17 @@ namespace Kitchen_Wizard.Data_Objects.Database_Helpers
             db.Table<HistoryDBItem>().Delete(x => x.timestamp == recipe.HistoryDate);
         }
 
-        public static List<Recipe> LoadFavorites()
+        public static List<RecipeClass> LoadFavorites()
         {
             Init();
 
             List<FavoritesDBItem> dbList = db.Table<FavoritesDBItem>().ToList();
 
-            List<Recipe> recipes = new();
+            List<RecipeClass> recipes = new();
 
             foreach(var item in dbList)
             {
-                Recipe recipe = new Recipe();
+                RecipeClass recipe = new RecipeClass();
                 recipe.ID = item.ID;
                 recipe.Name = item.recipeName;
                 recipe.IsFavorite = true;
@@ -105,17 +105,17 @@ namespace Kitchen_Wizard.Data_Objects.Database_Helpers
             return recipes;
         }
 
-        public static List<Recipe> LoadHistory()
+        public static List<RecipeClass> LoadHistory()
         {
             Init();
 
             List<HistoryDBItem> dbList = db.Table<HistoryDBItem>().ToList();
 
-            List<Recipe> recipes = new();
+            List<RecipeClass> recipes = new();
 
             foreach (var item in dbList)
             {
-                Recipe recipe = new Recipe();
+                RecipeClass recipe = new RecipeClass();
                 recipe.ID = item.ID;
                 recipe.Name = item.recipeName;
                 recipe.HistoryDate = item.timestamp;
@@ -176,7 +176,7 @@ namespace Kitchen_Wizard.Data_Objects.Database_Helpers
             return db.Table<HistoryDBItem>().Where(x => recipeID == x.ID).Count() > 0;
         }
 
-        public static DateTime GetHistoryDate(Recipe recipe)
+        public static DateTime GetHistoryDate(RecipeClass recipe)
         {
             List<HistoryDBItem> items = db.Table<HistoryDBItem>().Where(x => x.ID == recipe.ID).ToList();
 

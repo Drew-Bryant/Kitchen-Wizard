@@ -15,26 +15,37 @@ namespace Kitchen_Wizard.Models
 {
     public partial class FavoritesAndHistoryPageModel : IKitchenWizardViewModel
     {
+        public ObservableCollection<RecipeClass> Favorites { get; set; } = new();
+        public ObservableCollection<RecipeClass> History { get; set; } = new();
+
+        [ObservableProperty]
+        bool favoritesIsRefreshing;
+
+        [ObservableProperty]
+        bool historyIsRefreshing;
+
         public FavoritesAndHistoryPageModel()
         {      
             Title = "Favorites and History";
-            LoadData();
             FavoritesIsRefreshing = false;
             HistoryIsRefreshing = false;
            
         }
 
-        private void LoadData()
+        public void LoadFavorites()
         {
-            List<Recipe> faves = FavoritesHistoryDBHelper.LoadFavorites();
+            List<RecipeClass> faves = FavoritesHistoryDBHelper.LoadFavorites();
 
             Favorites.Clear();
             foreach (var item in faves)
             {
                 Favorites.Add(item);
             }
+        }
 
-            List<Recipe> history = FavoritesHistoryDBHelper.LoadHistory();
+        public void LoadHistory()
+        {
+            List<RecipeClass> history = FavoritesHistoryDBHelper.LoadHistory();
 
             History.Clear();
             foreach (var item in history)
@@ -42,13 +53,18 @@ namespace Kitchen_Wizard.Models
                 History.Add(item);
             }
         }
+        private void LoadData()
+        {
+            LoadFavorites();
+            LoadHistory();
+        }
 
         [RelayCommand]
         void RefreshFavorites()
         {
             FavoritesIsRefreshing = true;
 
-            LoadData();
+            LoadFavorites();
 
             FavoritesIsRefreshing = false;
         }
@@ -58,19 +74,11 @@ namespace Kitchen_Wizard.Models
         {
             HistoryIsRefreshing = true;
 
-            LoadData();
+            LoadHistory();
 
             HistoryIsRefreshing = false;
         }
 
-        public ObservableCollection<Recipe> Favorites { get; set; } = new();
-        public ObservableCollection<Recipe> History { get; set; } = new();
-
-        [ObservableProperty]
-        bool favoritesIsRefreshing;
-
-        [ObservableProperty]
-        bool historyIsRefreshing;
 
     }
 }

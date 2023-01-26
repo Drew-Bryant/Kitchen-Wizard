@@ -15,5 +15,9 @@
             Margin="20"
             Command="{Binding ClearHistoryCommand}"
             Text="Drop History Table" />
+        <Button
+            Margin="20"
+            Command="{Binding ClearFoodListCommand}"
+            Text="Drop Food List Table" />
     </VerticalStackLayout>
 </ContentPage>

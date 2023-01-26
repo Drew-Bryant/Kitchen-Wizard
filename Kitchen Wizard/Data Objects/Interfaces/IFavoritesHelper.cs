@@ -8,8 +8,8 @@ namespace Kitchen_Wizard.Data_Objects.Interfaces
 {
     public interface IFavoritesHelper
     {
-        public Task Add(Recipe recipe);
-        public Task Remove(Recipe recipe);
-        public Task<List<Recipe>> LoadFavorites();
+        public Task Add(RecipeClass recipe);
+        public Task Remove(RecipeClass recipe);
+        public Task<List<RecipeClass>> LoadFavorites();
     }
 }

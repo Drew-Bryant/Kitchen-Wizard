@@ -6,7 +6,8 @@
     xmlns:namespace="clr-namespace:Kitchen_Wizard.Data_Objects"
     xmlns:viewmodel="clr-namespace:Kitchen_Wizard.Models"
     Title="Search Options"
-    x:DataType="viewmodel:RecipeSearchPageModel">
+    x:DataType="viewmodel:RecipeSearchPageModel"
+    Loaded="SetOptions">
     <VerticalStackLayout>
         <Label
             HorizontalOptions="Center"

@@ -22,8 +22,12 @@ public partial class ViewRecipePage : ContentPage
         Shell.Current.GoToAsync(nameof(IngredientsTab));
     }
 
-    private void InitButtons(object sender, EventArgs e)
+    protected override void OnAppearing()
     {
-        model.InitButtons();
+        base.OnAppearing();
+        model.InitProperties();
+
+
     }
+
 }

@@ -1,7 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+<!---I added this line below-->
 
-	<PropertyGroup>
-		<TargetFrameworks>
+  <PropertyGroup>
+    <TargetFrameworks>
 			net6.0-android;
 			net6.0-ios;
 			net6.0-maccatalyst
@@ -78,6 +79,9 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\Embedded Views\FavoritesTab.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Embedded Views\FoodListSearchPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\Embedded Views\HistoryTab.xaml">

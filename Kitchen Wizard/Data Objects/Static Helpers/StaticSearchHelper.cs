@@ -10,14 +10,14 @@ namespace Kitchen_Wizard.Data_Objects.Database_Helpers
 {
     public class StaticSearchHelper : ISearchHelper
     {
-        public List<Recipe> SearchRecipeByKeyword(string keyword, UserPreferences prefs)
+        public List<RecipeClass> SearchRecipeByKeyword(string keyword, UserPreferences prefs)
         {
          
-            List<Recipe> recipes = new();
+            List<RecipeClass> recipes = new();
 
             for(int ii = 0; ii < 10; ii++)
             {
-                Recipe recipe = new Recipe();
+                RecipeClass recipe = new RecipeClass();
 
                 recipe.Name = "Recipe number" + (ii + 1);
                 recipe.Cuisine = CuisineType.American;
@@ -33,15 +33,15 @@ namespace Kitchen_Wizard.Data_Objects.Database_Helpers
             return FilterByCuisineAndDietary(recipes, prefs);
         }
 
-        private List<Recipe> FilterByCuisineAndDietary(List<Recipe> recipes, UserPreferences prefs)
+        private List<RecipeClass> FilterByCuisineAndDietary(List<RecipeClass> recipes, UserPreferences prefs)
         {
-            List<Recipe> filteredList = FilterByCuisine(recipes, prefs);
+            List<RecipeClass> filteredList = FilterByCuisine(recipes, prefs);
 
             return FilterByDietary(filteredList, prefs);
 
         }
 
-        private List<Recipe> FilterByCuisine(List<Recipe> recipes, UserPreferences prefs)
+        private List<RecipeClass> FilterByCuisine(List<RecipeClass> recipes, UserPreferences prefs)
         {
             //If preference is Any, all recipes are fine
             if(prefs.Cuisine.Count == 1 && prefs.Cuisine[0] == CuisineType.Any.ToString())
@@ -53,7 +53,7 @@ namespace Kitchen_Wizard.Data_Objects.Database_Helpers
             return recipes.Where(recipe => prefs.Cuisine.Contains(recipe.Cuisine.ToString())).ToList();
         }
 
-        private List<Recipe> FilterByDietary(List<Recipe> recipes, UserPreferences prefs)
+        private List<RecipeClass> FilterByDietary(List<RecipeClass> recipes, UserPreferences prefs)
         {
             //if there's no restrictions, the whole list is fine
             if(prefs.Dietary.Count == 1 && prefs.Dietary[0] == DietaryRestrictions.None.ToString())
@@ -61,7 +61,7 @@ namespace Kitchen_Wizard.Data_Objects.Database_Helpers
                 return recipes;
             }
 
-            List<Recipe> dietaryList = new();
+            List<RecipeClass> dietaryList = new();
 
             foreach(var recipe in recipes)
             {
@@ -89,15 +89,30 @@ namespace Kitchen_Wizard.Data_Objects.Database_Helpers
 
             return dietaryList;
         }
-        public List<Recipe> SearchRecipeByFoodList(UserPreferences prefs)
+        public List<RecipeClass> SearchRecipeByFoodList(UserPreferences prefs)
         {
             throw new NotImplementedException();
         }
-        public List<Food> SearchFoodDB(string keyword)
+        public List<FoodListItem> SearchFoodDB(string keyword)
         {
-            throw new NotImplementedException();
+            List<FoodListItem> results = new List<FoodListItem>();
+
+            for(int ii = 1; ii < 11; ii++)
+            {
+                FoodListItem item = new FoodListItem();
+
+                item.Name = "Food Number" + ii;
+                item.QuantityValue = 0;
+                item.QuantityString = "0";
+                item.Units = (ii % 2 == 0) ? Unit.Cup : Unit.Tbsp; //make half of them cups and half tbsp
+                item.IsSpice = (ii % 2 == 0); //make half of them spices for testing
+                item.ID = ii;
+                item.Unlimited = false; //default unlimited to false on searched items
+            }
+
+            return results;
         }
-        private List<Recipe> ValidateFoodList(List<Recipe> recipeList, List<Food> foodList, UserPreferences prefs)
+        private List<RecipeClass> ValidateFoodList(List<RecipeClass> recipeList, List<Food> foodList, UserPreferences prefs)
         {
             throw new NotImplementedException();
         }

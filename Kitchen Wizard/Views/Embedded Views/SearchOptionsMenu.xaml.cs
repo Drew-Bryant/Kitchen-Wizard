@@ -5,12 +5,18 @@ namespace Kitchen_Wizard.Views.Embedded_Views;
 
 public partial class SearchOptionsMenu : ContentPage
 {
+	private RecipeSearchPageModel model;
 	public SearchOptionsMenu(RecipeSearchPageModel viewModel)
 	{
 		InitializeComponent();
 
 		BindingContext = viewModel;
-        viewModel.SetDefaultOptions();
+		model = viewModel;
 	}
 
+	private void SetOptions(object sender, EventArgs e)
+	{
+		model.SetDefaultOptions();
+		model.IsBack = true;
+	}
 }

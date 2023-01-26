@@ -6,8 +6,7 @@
     xmlns:object="clr-namespace:Kitchen_Wizard.Data_Objects"
     xmlns:viewmodel="clr-namespace:Kitchen_Wizard.Models"
     Title="{Binding Recipe.Name}"
-    x:DataType="viewmodel:ViewRecipePageModel"
-    Loaded="InitButtons">
+    x:DataType="viewmodel:ViewRecipePageModel">
     <!--  Add an item to the toolbar  -->
     <ContentPage.ToolbarItems>
         <!--  ToolbarItem for opening ingredients flyout, or swipe gesture  -->
@@ -78,8 +77,6 @@
             <!--</VerticalStackLayout>
             </ScrollView>-->
         </VerticalStackLayout>
-
-
     </VerticalStackLayout>
 
 

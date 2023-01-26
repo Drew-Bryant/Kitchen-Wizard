@@ -8,8 +8,8 @@ namespace Kitchen_Wizard.Data_Objects.Interfaces
 {
     public interface IRecipeHelper
     {
-        public Recipe GetFullByName(string recipeName);
-        public Recipe GetFullByID(int recipeID);
-        public Recipe GetPartialByID(int recipeID);
+        public RecipeClass GetFullByName(string recipeName);
+        public RecipeClass GetFullByID(int recipeID);
+        public RecipeClass GetPartialByID(int recipeID);
     }
 }

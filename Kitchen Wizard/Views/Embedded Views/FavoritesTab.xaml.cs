@@ -19,9 +19,16 @@ public partial class FavoritesTab : ContentPage
         model = viewModel;
 	}
 
+
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+
+        model.LoadFavorites();
+    }
 	private async void FavoritesItemTapped(object sender, EventArgs e)
 	{
-        Recipe recipe = ((VisualElement)sender).BindingContext as Recipe;
+        RecipeClass recipe = ((VisualElement)sender).BindingContext as RecipeClass;
 
         //should never happen...sanity check
         if (recipe == null)

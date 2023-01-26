@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Kitchen_Wizard.Data_Objects
 {
-    public class Recipe
+    public class RecipeClass
     {
         public string Name { get; set; }
         public string Description { get; set; }

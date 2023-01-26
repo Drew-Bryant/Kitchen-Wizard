@@ -9,8 +9,8 @@ namespace Kitchen_Wizard.Data_Objects.Interfaces
 {
     public interface ISearchHelper
     {
-        public List<Recipe> SearchRecipeByKeyword(string keyword, UserPreferences prefs);
-        public List<Recipe> SearchRecipeByFoodList(UserPreferences prefs);
-        public List<Food> SearchFoodDB(string keyword);
+        public List<RecipeClass> SearchRecipeByKeyword(string keyword, UserPreferences prefs);
+        public List<RecipeClass> SearchRecipeByFoodList(UserPreferences prefs);
+        public List<FoodListItem> SearchFoodDB(string keyword);
     }
 }

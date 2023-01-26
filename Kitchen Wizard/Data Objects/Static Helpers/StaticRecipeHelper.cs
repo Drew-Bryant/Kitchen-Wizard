@@ -14,9 +14,9 @@ namespace Kitchen_Wizard.Data_Objects.Static_Helpers
     {
         //Build one Recipe to simulate the format that the real database will take
         //Including parsing strings of steps and ingredients into lists
-        public Recipe GetFullByID(int recipeID)
+        public RecipeClass GetFullByID(int recipeID)
         {
-            Recipe recipe = new();
+            RecipeClass recipe = new();
             recipe.Name = $"Recipe number {recipeID}";
             recipe.ID = recipeID;
             recipe.Description = "This is the description for the recipe";
@@ -52,13 +52,13 @@ namespace Kitchen_Wizard.Data_Objects.Static_Helpers
             return recipe;
         }
 
-        public Recipe GetFullByName(string recipeName)
+        public RecipeClass GetFullByName(string recipeName)
         {
             throw new NotImplementedException();
         }
 
 
-        public Recipe GetPartialByID(int recipeID)
+        public RecipeClass GetPartialByID(int recipeID)
         {
             throw new NotImplementedException();
         }

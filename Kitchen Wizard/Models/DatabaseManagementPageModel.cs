@@ -25,6 +25,12 @@ namespace Kitchen_Wizard.Models
             FavoritesHistoryDBHelper.ClearHistory();
         }
 
+        [RelayCommand]
+        void ClearFoodList()
+        {
+            FoodListDBHelper.ClearFoodList();
+        }
+
         //reset preferences button
 
     }

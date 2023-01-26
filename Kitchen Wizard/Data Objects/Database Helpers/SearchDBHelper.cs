@@ -10,19 +10,20 @@ namespace Kitchen_Wizard.Data_Objects.Database_Helpers
 {
     public class SearchDBHelper : ISearchHelper
     {
-        public List<Recipe>SearchRecipeByKeyword(string keyword, UserPreferences prefs)
+        public List<RecipeClass>SearchRecipeByKeyword(string keyword, UserPreferences prefs)
         {
             throw new NotImplementedException();
         }
-        public List<Recipe> SearchRecipeByFoodList(UserPreferences prefs)
+        public List<RecipeClass> SearchRecipeByFoodList(UserPreferences prefs)
         {
             throw new NotImplementedException();
         }
-        public List<Food> SearchFoodDB(string keyword)
+        public List<FoodListItem> SearchFoodDB(string keyword)
         {
+            //this is where to initialize the foodlistitem and it defaults to infinite being OFF
             throw new NotImplementedException();
         }
-        private List<Recipe> ValidateFoodList(List<Recipe> recipeList, List<Food> foodList, UserPreferences prefs)
+        private List<RecipeClass> ValidateFoodList(List<RecipeClass> recipeList, List<Food> foodList, UserPreferences prefs)
         {
             throw new NotImplementedException();
         }
