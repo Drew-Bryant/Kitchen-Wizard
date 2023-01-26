@@ -23,7 +23,6 @@ public static class MauiProgram
 			});
 
 		//register dependency injection services
-        builder.Services.AddTransient<IFoodListHelper, FoodListDBHelper>();
         //builder.Services.AddTransient<IRecipeHelper, RecipeDBHelper>();
         //builder.Services.AddTransient<ISearchHelper, SearchDBHelper>();
         builder.Services.AddTransient<IUserPreferences, UserPreferences>();

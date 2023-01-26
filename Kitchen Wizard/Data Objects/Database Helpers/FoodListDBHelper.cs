@@ -13,7 +13,7 @@ namespace Kitchen_Wizard.Data_Objects.Database_Helpers
     public class FoodListDBItem
     {
         [PrimaryKey]
-        public int ID { get; set }
+        public int ID { get; set; }
         public double QuantityValue { get; set; }
         //public string QuantityString { get; set; } not needed to store I think, just tostring the quantity
         public string UnitString { get; set; }

@@ -22,23 +22,37 @@
                         <Button
                             Grid.Row="0"
                             Grid.Column="1"
-                            Text="Unlimited"/>
-                        <Switch Grid.Row="0" Grid.Column="2" IsToggled="{Binding Unlimited}">
+                            Text="Unlimited" />
+                        <Switch
+                            Grid.Row="0"
+                            Grid.Column="2"
+                            IsToggled="{Binding Unlimited}">
                             <Switch.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type local:FoodListPageModel}}, Path=ToggleInfiniteCommand}" 
-                                                      CommandParameter="{Binding .}"/>
+                                <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:FoodListPageModel}}, Path=ToggleInfiniteCommand}" CommandParameter="{Binding .}" />
                             </Switch.GestureRecognizers>
                         </Switch>
                         <HorizontalStackLayout Grid.Row="1" Grid.Column="0">
-                            <Entry Placeholder="{Binding QuantityValue}" Keyboard="Numeric" TextChanged="QuantityUpdated"/>
+                            <Entry
+                                Keyboard="Numeric"
+                                Placeholder="{Binding QuantityValue}"
+                                TextChanged="QuantityUpdated" />
                             <VerticalStackLayout>
-                                <Button Margin="0,0,0,3" Text="+" Command="{Binding Source={RelativeSource AncestorType={x:Type local:FoodListPageModel}}, Path=IncrementQuantityCommand}" 
-                                        CommandParameter="{Binding .}"/>
-                                <Button Text="-" Command="{Binding Source={RelativeSource AncestorType={x:Type local:FoodListPageModel}}, Path=DecrementQuantityCommand}"
-                                        CommandParameter="{Binding .}"/>
+                                <Button
+                                    Margin="0,0,0,3"
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:FoodListPageModel}}, Path=IncrementQuantityCommand}"
+                                    CommandParameter="{Binding .}"
+                                    Text="+" />
+                                <Button
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:FoodListPageModel}}, Path=DecrementQuantityCommand}"
+                                    CommandParameter="{Binding .}"
+                                    Text="-" />
                             </VerticalStackLayout>
                         </HorizontalStackLayout>
-                        <Button Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Text="Delete"></Button>
+                        <Button
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            Grid.ColumnSpan="2"
+                            Text="Delete" />
                     </Grid>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
