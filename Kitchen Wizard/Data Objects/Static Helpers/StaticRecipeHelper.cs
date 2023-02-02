@@ -12,6 +12,7 @@ namespace Kitchen_Wizard.Data_Objects.Static_Helpers
 {
     public class StaticRecipeHelper : IRecipeHelper
     {
+
         //Build one Recipe to simulate the format that the real database will take
         //Including parsing strings of steps and ingredients into lists
         public RecipeClass GetFullByID(int recipeID)

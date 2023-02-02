@@ -122,6 +122,13 @@ namespace Kitchen_Wizard.Models
 
             }
         }
+
+        [RelayCommand]
+        public void ToggleInfiniteSpices()
+        {
+            UserPrefs.InfiniteSpices = !UserPrefs.InfiniteSpices;
+            prefsHelper.Save(UserPrefs);
+        }
         [RelayCommand]
         public void ToggleCuisine(string name)
         {

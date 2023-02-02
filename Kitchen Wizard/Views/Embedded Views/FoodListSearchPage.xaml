@@ -1,13 +1,80 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Kitchen_Wizard.Views.Embedded_Views.FoodListSearchPage"
-             xmlns:viewmodel="clr-namespace:Kitchen_Wizard.Models"
-             xmlns:object="clr-namespace:Kitchen_Wizard.Data_Objects"
-             x:DataType="viewmodel:FoodListPageModel" 
-             Title="Search For Foods">
+<ContentPage
+    x:Class="Kitchen_Wizard.Views.Embedded_Views.FoodListSearchPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:object="clr-namespace:Kitchen_Wizard.Data_Objects"
+    xmlns:viewmodel="clr-namespace:Kitchen_Wizard.Models"
+    Title="Search For Foods"
+    x:DataType="viewmodel:FoodListPageModel">
     <VerticalStackLayout>
-        <!--basically just copy over the search page and repurpose it to show foodlistitems-->
-        
+        <!--  basically just copy over the search page and repurpose it to show foodlistitems  -->
+        <Grid
+            Padding="10"
+            ColumnDefinitions=".75*, .25*"
+            ColumnSpacing="10"
+            RowDefinitions="Auto, *"
+            RowSpacing="10">
+            <Entry
+                x:Name="SearchField"
+                Grid.Row="0"
+                Placeholder="Click here to search"
+                Text="{Binding SearchField}" />
+
+            <Button
+                Grid.Row="0"
+                Grid.Column="1"
+                Command="{Binding FoodListSearchCommand}"
+                CommandParameter="{Binding SearchField}"
+                IsEnabled="{Binding NotLoadingData}"
+                Text="Search" />
+
+            <!--  Display search results  -->
+            <CollectionView
+                x:Name="SearchResults"
+                Grid.Row="2"
+                Grid.ColumnSpan="2"
+                Margin="20"
+                EmptyView=""
+                ItemsSource="{Binding SearchResults}">
+
+                <CollectionView.EmptyViewTemplate>
+                    <DataTemplate>
+                        <VerticalStackLayout
+                            Margin="0,20,0,0"
+                            HorizontalOptions="CenterAndExpand"
+                            VerticalOptions="Start">
+                            <!--<Label FontSize="16" Text="{x:Reference SearchField}" />-->
+                            <Label FontSize="16" Text="There were no results. Please enter a new search term or edit your search options." />
+                        </VerticalStackLayout>
+                    </DataTemplate>
+                </CollectionView.EmptyViewTemplate>
+
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout ItemSpacing="10" Orientation="Vertical" />
+                </CollectionView.ItemsLayout>
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="{x:Type object:FoodListItem}">
+                        <Grid>
+                            <Frame>
+                                <Frame.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="SearchResultTapped" />
+                                </Frame.GestureRecognizers>
+                                <Label FontSize="12" Text="{Binding Name}" />
+                            </Frame>
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+            <ActivityIndicator
+                Grid.RowSpan="2"
+                Grid.ColumnSpan="2"
+                HorizontalOptions="FillAndExpand"
+                IsRunning="{Binding LoadingData}"
+                IsVisible="{Binding LoadingData}"
+                VerticalOptions="CenterAndExpand" />
+        </Grid>
     </VerticalStackLayout>
 </ContentPage>

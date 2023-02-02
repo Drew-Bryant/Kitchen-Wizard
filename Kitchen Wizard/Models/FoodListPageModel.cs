@@ -1,9 +1,12 @@
-﻿using CommunityToolkit.Mvvm.Input;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using Kitchen_Wizard.Data_Objects;
 using Kitchen_Wizard.Data_Objects.Database_Helpers;
+using Kitchen_Wizard.Data_Objects.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,20 +17,78 @@ namespace Kitchen_Wizard.Models
     {
 
         public ObservableCollection<FoodListItem> FoodList { get; set; } = new();
+        public ObservableCollection<FoodListItem> SearchResults { get; set; } = new();
 
-        
-        public void LoadFoodList()
+        UserPreferences userPrefs { get; set; } = new();
+
+
+        [ObservableProperty]
+        string searchField;
+
+        private ISearchHelper searchHelper;
+        private IUserPreferences prefsHelper;
+        public FoodListPageModel(ISearchHelper _searchHelper)
         {
+            searchHelper = _searchHelper;
+            Title = "Food List";
+        }
+
+        public void InitData()
+        {
+            userPrefs.LoadPrefs();
             FoodList.Clear();
 
             List<FoodListItem> foodList = FoodListDBHelper.LoadFoodList().OrderBy(x => x.Name).ToList();
 
-            foreach(var item in foodList)
+            foreach (var item in foodList)
             {
                 FoodList.Add(item);
+
+                if (item.IsSpice && userPrefs.InfiniteSpices == true)
+                {
+                    item.Unlimited = true;
+                }
+            }
+
+
+            Debug.WriteLine("Finished loading food list\n");
+        }
+
+
+        public void AddFood(FoodListItem food)
+        {
+            FoodListDBHelper.Add(food);
+            if(FoodList.Select(x => x.ID == food.ID).Count() < 1)
+            {
+                FoodList.Add(food);
+                FoodList.OrderBy(x => x.Name);
             }
         }
 
+        public void ClearFoodList()
+        {
+            FoodList.Clear();
+            FoodListDBHelper.ClearFoodList();
+        }
+        [RelayCommand]
+        public void DeleteFood(FoodListItem food)
+        {
+            FoodList.Remove(food);
+            FoodListDBHelper.Delete(food);
+        }
+
+        [RelayCommand]
+        public void FoodListSearch(string keyword)
+        {
+            SearchResults.Clear();
+            List<FoodListItem> results = searchHelper.SearchFoodDB(keyword).OrderBy(x => x.Name).ToList();
+
+            foreach(var result in results)
+            {
+                SearchResults.Add(result);
+            }
+
+        }
         [RelayCommand]
         public void ToggleInfinite(FoodListItem item)
         {
@@ -35,10 +96,12 @@ namespace Kitchen_Wizard.Models
 
             FoodListDBHelper.Save(item);
 
+            //LoadFoodList();
+
             //I wanted to use FoodList.Where to do this but you can't change values it seems
             foreach (var food in FoodList)
             {
-                if(food.ID == item.ID)
+                if (food.ID == item.ID)
                 {
                     food.Unlimited = item.Unlimited;
                     return;
@@ -51,17 +114,17 @@ namespace Kitchen_Wizard.Models
         public void IncrementQuantity(FoodListItem item)
         {
             item.QuantityValue += 1;
-
             FoodListDBHelper.Save(item);
-            //I wanted to use FoodList.Where to do this but you can't change values it seems
+
             foreach (var food in FoodList)
             {
-                if (food.ID == item.ID)
+                if(food.ID == item.ID)
                 {
-                    food.Unlimited = item.Unlimited;
+                    food.QuantityValue = item.QuantityValue;
                     return;
                 }
             }
+            //LoadFoodList();
         }
 
         [RelayCommand]
@@ -76,15 +139,16 @@ namespace Kitchen_Wizard.Models
             item.QuantityValue -= 1;
 
             FoodListDBHelper.Save(item);
-            //I wanted to use FoodList.Where to do this but you can't change values it seems
+
             foreach (var food in FoodList)
             {
                 if (food.ID == item.ID)
                 {
-                    food.Unlimited = item.Unlimited;
+                    food.QuantityValue = item.QuantityValue;
                     return;
                 }
             }
+
         }
     }
 }

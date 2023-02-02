@@ -36,7 +36,7 @@
         <ShellContent
             Title="Food List"
             ContentTemplate="{DataTemplate views:FoodListPage}"
-            Route="FoodListPage" />
+            Route="FoodListPage"/>
     </FlyoutItem>
 
     <FlyoutItem Title="Preferences">

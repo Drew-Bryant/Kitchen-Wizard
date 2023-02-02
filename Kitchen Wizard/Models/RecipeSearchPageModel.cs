@@ -15,7 +15,6 @@ namespace Kitchen_Wizard.Models
     public partial class RecipeSearchPageModel : IKitchenWizardViewModel
     {
         private ISearchHelper searchHelper;
-        private IFoodListHelper foodListHelper;
         private IRecipeHelper recipeHelper;
         private IUserPreferences userPrefs;
 
@@ -62,10 +61,9 @@ namespace Kitchen_Wizard.Models
 
         public bool IsBack { get; set; } = false;
 
-        public RecipeSearchPageModel(ISearchHelper _searchHelper, IFoodListHelper _foodListHelper, IRecipeHelper _recipeHelper, IUserPreferences _userPrefs)
+        public RecipeSearchPageModel(ISearchHelper _searchHelper, IRecipeHelper _recipeHelper, IUserPreferences _userPrefs)
         {
             searchHelper = _searchHelper;
-            foodListHelper = _foodListHelper;
             recipeHelper = _recipeHelper;
             userPrefs = _userPrefs;
 

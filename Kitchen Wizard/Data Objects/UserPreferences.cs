@@ -1,4 +1,5 @@
-﻿using Kitchen_Wizard.Data_Objects.Interfaces;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using Kitchen_Wizard.Data_Objects.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,7 +27,7 @@ namespace Kitchen_Wizard.Data_Objects
         Vegan,
         Vegetarian
     }
-    public class UserPreferences : IUserPreferences
+    public partial class UserPreferences : ObservableObject, IUserPreferences
     {
 
         //key values for local storage
@@ -50,7 +51,9 @@ namespace Kitchen_Wizard.Data_Objects
         public bool Restock { get; set; }
         public bool GroceryTrip { get; set; }
         public int GTAllowance { get; set; }
-        public bool InfiniteSpices { get; set; }
+
+        [ObservableProperty]
+        bool infiniteSpices;
 
         public UserPreferences()
         {

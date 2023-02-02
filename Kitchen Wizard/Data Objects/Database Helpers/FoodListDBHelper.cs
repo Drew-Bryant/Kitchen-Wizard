@@ -48,7 +48,8 @@ namespace Kitchen_Wizard.Data_Objects.Database_Helpers
             item.IsSpice = food.IsSpice;
             item.Unlimited = food.Unlimited;
             item.ExpirationDate = food.ExpirationDate;
-            db.Insert(item, typeof(FoodListDBItem));
+            db.InsertOrReplace(item, typeof(FoodListDBItem));
+            //db.Insert(item, typeof(FoodListDBItem));
 
         }
 
@@ -89,13 +90,23 @@ namespace Kitchen_Wizard.Data_Objects.Database_Helpers
             {
                 FoodListItem food = new FoodListItem();
                 food.ID = item.ID;
-                food.QuantityValue = food.QuantityValue;
+                food.QuantityValue = item.QuantityValue;
 
                 //parse the string into an enum
                 Unit units;
                 Enum.TryParse(item.UnitString, out units);
                 food.Units = units;
 
+                if(food.VolumeUnits.Contains(food.Units))
+                {
+                    food.MyUnits = food.VolumeUnits;
+                }
+                else if(food.MassUnits.Contains(food.Units))
+                {
+                    food.MyUnits = food.MassUnits;
+                }
+
+                food.UnitIndex = food.MyUnits.IndexOf(food.Units);
                 food.Name = item.Name;
                 food.IsSpice = item.IsSpice;
                 food.Unlimited = item.Unlimited;
@@ -107,7 +118,7 @@ namespace Kitchen_Wizard.Data_Objects.Database_Helpers
             //dont forget to convert enums and quantities
         }
 
-        public static void Remove(FoodListItem food)
+        public static void Delete(FoodListItem food)
         {
             Init();
             db.Table<FoodListDBItem>().Delete(x => x.ID == food.ID);
@@ -128,7 +139,10 @@ namespace Kitchen_Wizard.Data_Objects.Database_Helpers
             item.Unlimited = food.Unlimited;
             item.ExpirationDate = food.ExpirationDate;
 
-            db.Update(item, typeof(FoodListDBItem)); //it will already be there, just update based on PK
+
+            var updated = db.Update(item, typeof(FoodListDBItem)); //it will already be there, just update based on PK
+
+            Debug.WriteLine($"Save in FoodListDBHelper updated {updated} rows\n");
         }
     }
 }

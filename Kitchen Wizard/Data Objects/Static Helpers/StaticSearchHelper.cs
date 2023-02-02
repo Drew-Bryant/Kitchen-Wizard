@@ -104,10 +104,17 @@ namespace Kitchen_Wizard.Data_Objects.Database_Helpers
                 item.Name = "Food Number" + ii;
                 item.QuantityValue = 0;
                 item.QuantityString = "0";
-                item.Units = (ii % 2 == 0) ? Unit.Cup : Unit.Tbsp; //make half of them cups and half tbsp
+                item.Units = (ii % 2 == 0) ? Unit.cups : Unit.grams; //make half of them cups and half tbsp
                 item.IsSpice = (ii % 2 == 0); //make half of them spices for testing
                 item.ID = ii;
                 item.Unlimited = false; //default unlimited to false on searched items
+
+                if(item.IsSpice)
+                {
+                    item.Name = $"Spice number {ii}"; 
+                }
+
+                results.Add(item);
             }
 
             return results;

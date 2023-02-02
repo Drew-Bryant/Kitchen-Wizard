@@ -45,6 +45,7 @@ public static class MauiProgram
         builder.Services.AddTransient<HistoryTab>();
         builder.Services.AddTransient<IngredientsTab>();
         builder.Services.AddTransient<SearchOptionsMenu>();
+        builder.Services.AddTransient<FoodListSearchPage>();
 
         //register viewmodels for data binding
         builder.Services.AddSingleton<RecipeSearchPageModel>(); //Singleton to try and maintain state of UserPrefs between search page and options
@@ -52,7 +53,10 @@ public static class MauiProgram
         builder.Services.AddTransient<FavoritesAndHistoryPageModel>();
         builder.Services.AddTransient<DatabaseManagementPageModel>();
         builder.Services.AddTransient<SettingsPageModel>();
-        builder.Services.AddTransient<FoodListPageModel>();
+
+
+        builder.Services.AddSingleton<FoodListPageModel>();
+
         return builder.Build();
 	}
 }
