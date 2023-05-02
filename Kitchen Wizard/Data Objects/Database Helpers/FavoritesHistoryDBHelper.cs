@@ -61,7 +61,7 @@ namespace Kitchen_Wizard.Data_Objects.Database_Helpers
             var dbItem = new HistoryDBItem();
             dbItem.recipeName = recipe.Name;
             dbItem.ID = recipe.ID;
-            dbItem.timestamp = DateTime.Now;
+            dbItem.timestamp = DateTime.Today;
 
             db.InsertOrReplace(dbItem, typeof(HistoryDBItem));
 

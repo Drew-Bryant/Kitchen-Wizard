@@ -6,192 +6,374 @@
     xmlns:viewmodel="clr-namespace:Kitchen_Wizard.Models"
     Title="{Binding Title}"
     x:DataType="viewmodel:SettingsPageModel">
-    <VerticalStackLayout>
-        <Label FontSize="16" Text="Note: Preferences will be automatically saved after every selection" />
-        <Label
-            HorizontalOptions="Center"
-            Text="General Options"
-            VerticalOptions="Center" />
-        <Grid
-            Padding="10"
-            ColumnDefinitions=".5*, .5*"
-            ColumnSpacing="10"
-            RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto"
-            RowSpacing="5">
+    <ScrollView>
+        <VerticalStackLayout>
+            <Label FontSize="16" Text="Note: Preferences will be automatically saved after every selection" />
+            <HorizontalStackLayout Margin="0,0,0,20">
+                <Label
+                    Margin="0,0,40,0"
+                    HorizontalOptions="Center"
+                    Text="General Options"
+                    VerticalOptions="Center" />
+                <Button
+                    x:Name="ShowSearchOptionsButton"
+                    Clicked="ToggleSearchOptionsGrid"
+                    Text="{Binding SearchOptionButtonText}" />
+            </HorizontalStackLayout>
+            <Grid
+                x:Name="SearchOptionsGrid"
+                Padding="10"
+                ColumnDefinitions=".5*, .5*"
+                ColumnSpacing="10"
+                RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto"
+                RowSpacing="5">
 
-            <Label
-                Grid.Row="0"
-                Grid.Column="0"
-                Text="Cuisine Type:" />
+                <Label
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Text="Cuisine Type:" />
 
-            <HorizontalStackLayout Grid.Row="1" Grid.Column="0">
-                <HorizontalStackLayout.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding ToggleCuisineCommand}" CommandParameter="{Binding CuisineStrings[0]}" />
-                </HorizontalStackLayout.GestureRecognizers>
-                <CheckBox IsChecked="{Binding AnyChecked}">
-                    <CheckBox.GestureRecognizers>
+                <HorizontalStackLayout Grid.Row="1" Grid.Column="0">
+                    <HorizontalStackLayout.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding ToggleCuisineCommand}" CommandParameter="{Binding CuisineStrings[0]}" />
-                    </CheckBox.GestureRecognizers>
-                </CheckBox>
-                <Label Text="{Binding CuisineStrings[0]}" />
-            </HorizontalStackLayout>
+                    </HorizontalStackLayout.GestureRecognizers>
+                    <CheckBox IsChecked="{Binding AnyChecked}">
+                        <CheckBox.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding ToggleCuisineCommand}" CommandParameter="{Binding CuisineStrings[0]}" />
+                        </CheckBox.GestureRecognizers>
+                    </CheckBox>
+                    <Label Text="{Binding CuisineStrings[0]}" />
+                </HorizontalStackLayout>
 
-            <HorizontalStackLayout Grid.Row="2" Grid.Column="0">
-                <HorizontalStackLayout.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding ToggleCuisineCommand}" CommandParameter="{Binding CuisineStrings[1]}" />
-                </HorizontalStackLayout.GestureRecognizers>
-                <CheckBox IsChecked="{Binding MexicanChecked}">
-                    <CheckBox.GestureRecognizers>
+                <HorizontalStackLayout Grid.Row="2" Grid.Column="0">
+                    <HorizontalStackLayout.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding ToggleCuisineCommand}" CommandParameter="{Binding CuisineStrings[1]}" />
-                    </CheckBox.GestureRecognizers>
-                </CheckBox>
-                <Label Text="{Binding CuisineStrings[1]}" />
-            </HorizontalStackLayout>
+                    </HorizontalStackLayout.GestureRecognizers>
+                    <CheckBox IsChecked="{Binding MexicanChecked}">
+                        <CheckBox.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding ToggleCuisineCommand}" CommandParameter="{Binding CuisineStrings[1]}" />
+                        </CheckBox.GestureRecognizers>
+                    </CheckBox>
+                    <Label Text="{Binding CuisineStrings[1]}" />
+                </HorizontalStackLayout>
 
-            <HorizontalStackLayout Grid.Row="3" Grid.Column="0">
-                <HorizontalStackLayout.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding ToggleCuisineCommand}" CommandParameter="{Binding CuisineStrings[2]}" />
-                </HorizontalStackLayout.GestureRecognizers>
-                <CheckBox IsChecked="{Binding ItalianChecked}">
-                    <CheckBox.GestureRecognizers>
+                <HorizontalStackLayout Grid.Row="3" Grid.Column="0">
+                    <HorizontalStackLayout.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding ToggleCuisineCommand}" CommandParameter="{Binding CuisineStrings[2]}" />
-                    </CheckBox.GestureRecognizers>
-                </CheckBox>
-                <Label Text="{Binding CuisineStrings[2]}" />
-            </HorizontalStackLayout>
+                    </HorizontalStackLayout.GestureRecognizers>
+                    <CheckBox IsChecked="{Binding ItalianChecked}">
+                        <CheckBox.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding ToggleCuisineCommand}" CommandParameter="{Binding CuisineStrings[2]}" />
+                        </CheckBox.GestureRecognizers>
+                    </CheckBox>
+                    <Label Text="{Binding CuisineStrings[2]}" />
+                </HorizontalStackLayout>
 
-            <HorizontalStackLayout Grid.Row="4" Grid.Column="0">
-                <HorizontalStackLayout.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding ToggleCuisineCommand}" CommandParameter="{Binding CuisineStrings[3]}" />
-                </HorizontalStackLayout.GestureRecognizers>
-                <CheckBox IsChecked="{Binding AsianChecked}">
-                    <CheckBox.GestureRecognizers>
+                <HorizontalStackLayout Grid.Row="4" Grid.Column="0">
+                    <HorizontalStackLayout.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding ToggleCuisineCommand}" CommandParameter="{Binding CuisineStrings[3]}" />
-                    </CheckBox.GestureRecognizers>
-                </CheckBox>
-                <Label Text="{Binding CuisineStrings[3]}" />
-            </HorizontalStackLayout>
+                    </HorizontalStackLayout.GestureRecognizers>
+                    <CheckBox IsChecked="{Binding AsianChecked}">
+                        <CheckBox.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding ToggleCuisineCommand}" CommandParameter="{Binding CuisineStrings[3]}" />
+                        </CheckBox.GestureRecognizers>
+                    </CheckBox>
+                    <Label Text="{Binding CuisineStrings[3]}" />
+                </HorizontalStackLayout>
 
-            <HorizontalStackLayout Grid.Row="5" Grid.Column="0">
-                <HorizontalStackLayout.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding ToggleCuisineCommand}" CommandParameter="{Binding CuisineStrings[4]}" />
-                </HorizontalStackLayout.GestureRecognizers>
-                <CheckBox IsChecked="{Binding IndianChecked}">
-                    <CheckBox.GestureRecognizers>
+                <HorizontalStackLayout Grid.Row="5" Grid.Column="0">
+                    <HorizontalStackLayout.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding ToggleCuisineCommand}" CommandParameter="{Binding CuisineStrings[4]}" />
-                    </CheckBox.GestureRecognizers>
-                </CheckBox>
-                <Label Text="{Binding CuisineStrings[4]}" />
-            </HorizontalStackLayout>
+                    </HorizontalStackLayout.GestureRecognizers>
+                    <CheckBox IsChecked="{Binding IndianChecked}">
+                        <CheckBox.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding ToggleCuisineCommand}" CommandParameter="{Binding CuisineStrings[4]}" />
+                        </CheckBox.GestureRecognizers>
+                    </CheckBox>
+                    <Label Text="{Binding CuisineStrings[4]}" />
+                </HorizontalStackLayout>
 
-            <HorizontalStackLayout Grid.Row="6" Grid.Column="0">
-                <HorizontalStackLayout.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding ToggleCuisineCommand}" CommandParameter="{Binding CuisineStrings[5]}" />
-                </HorizontalStackLayout.GestureRecognizers>
-                <CheckBox IsChecked="{Binding AmericanChecked}">
-                    <CheckBox.GestureRecognizers>
+                <HorizontalStackLayout Grid.Row="6" Grid.Column="0">
+                    <HorizontalStackLayout.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding ToggleCuisineCommand}" CommandParameter="{Binding CuisineStrings[5]}" />
-                    </CheckBox.GestureRecognizers>
-                </CheckBox>
-                <Label Text="{Binding CuisineStrings[5]}" />
-            </HorizontalStackLayout>
+                    </HorizontalStackLayout.GestureRecognizers>
+                    <CheckBox IsChecked="{Binding AmericanChecked}">
+                        <CheckBox.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding ToggleCuisineCommand}" CommandParameter="{Binding CuisineStrings[5]}" />
+                        </CheckBox.GestureRecognizers>
+                    </CheckBox>
+                    <Label Text="{Binding CuisineStrings[5]}" />
+                </HorizontalStackLayout>
 
-            <!--  START OF DIETARY RESTRICTIONS OPTIONS  -->
-            <Label
-                Grid.Row="0"
-                Grid.Column="1"
-                Text="Dietary Restrictions:" />
+                <!--  START OF DIETARY RESTRICTIONS OPTIONS  -->
+                <Label
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    Text="Dietary Restrictions:" />
 
-            <HorizontalStackLayout
-                Grid.Row="1"
-                Grid.Column="1"
-                Margin="0,6,0,0">
-                <HorizontalStackLayout.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding ToggleDietaryCommand}" CommandParameter="{Binding DietaryStrings[0]}" />
-                </HorizontalStackLayout.GestureRecognizers>
-                <CheckBox IsChecked="{Binding NoneChecked}">
-                    <CheckBox.GestureRecognizers>
+                <HorizontalStackLayout
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    Margin="0,6,0,0">
+                    <HorizontalStackLayout.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding ToggleDietaryCommand}" CommandParameter="{Binding DietaryStrings[0]}" />
-                    </CheckBox.GestureRecognizers>
-                </CheckBox>
-                <Label Text="{Binding DietaryStrings[0]}" />
-            </HorizontalStackLayout>
+                    </HorizontalStackLayout.GestureRecognizers>
+                    <CheckBox IsChecked="{Binding NoneChecked}">
+                        <CheckBox.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding ToggleDietaryCommand}" CommandParameter="{Binding DietaryStrings[0]}" />
+                        </CheckBox.GestureRecognizers>
+                    </CheckBox>
+                    <Label Text="{Binding DietaryStrings[0]}" />
+                </HorizontalStackLayout>
 
-            <HorizontalStackLayout
-                Grid.Row="2"
-                Grid.Column="1"
-                Margin="0,6,0,0">
-                <HorizontalStackLayout.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding ToggleDietaryCommand}" CommandParameter="{Binding DietaryStrings[1]}" />
-                </HorizontalStackLayout.GestureRecognizers>
-                <CheckBox IsChecked="{Binding GlutenChecked}">
-                    <CheckBox.GestureRecognizers>
+                <HorizontalStackLayout
+                    Grid.Row="2"
+                    Grid.Column="1"
+                    Margin="0,6,0,0">
+                    <HorizontalStackLayout.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding ToggleDietaryCommand}" CommandParameter="{Binding DietaryStrings[1]}" />
-                    </CheckBox.GestureRecognizers>
-                </CheckBox>
-                <Label Text="{Binding DietaryStrings[1]}" />
-            </HorizontalStackLayout>
+                    </HorizontalStackLayout.GestureRecognizers>
+                    <CheckBox IsChecked="{Binding GlutenChecked}">
+                        <CheckBox.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding ToggleDietaryCommand}" CommandParameter="{Binding DietaryStrings[1]}" />
+                        </CheckBox.GestureRecognizers>
+                    </CheckBox>
+                    <Label Text="{Binding DietaryStrings[1]}" />
+                </HorizontalStackLayout>
 
-            <HorizontalStackLayout
-                Grid.Row="3"
-                Grid.Column="1"
-                Margin="0,6,0,0">
-                <HorizontalStackLayout.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding ToggleDietaryCommand}" CommandParameter="{Binding DietaryStrings[2]}" />
-                </HorizontalStackLayout.GestureRecognizers>
-                <CheckBox IsChecked="{Binding KetoChecked}">
-                    <CheckBox.GestureRecognizers>
+                <HorizontalStackLayout
+                    Grid.Row="3"
+                    Grid.Column="1"
+                    Margin="0,6,0,0">
+                    <HorizontalStackLayout.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding ToggleDietaryCommand}" CommandParameter="{Binding DietaryStrings[2]}" />
-                    </CheckBox.GestureRecognizers>
-                </CheckBox>
-                <Label Text="{Binding DietaryStrings[2]}" />
-            </HorizontalStackLayout>
+                    </HorizontalStackLayout.GestureRecognizers>
+                    <CheckBox IsChecked="{Binding KetoChecked}">
+                        <CheckBox.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding ToggleDietaryCommand}" CommandParameter="{Binding DietaryStrings[2]}" />
+                        </CheckBox.GestureRecognizers>
+                    </CheckBox>
+                    <Label Text="{Binding DietaryStrings[2]}" />
+                </HorizontalStackLayout>
 
-            <HorizontalStackLayout
-                Grid.Row="4"
-                Grid.Column="1"
-                Margin="0,6,0,0">
-                <HorizontalStackLayout.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding ToggleDietaryCommand}" CommandParameter="{Binding DietaryStrings[3]}" />
-                </HorizontalStackLayout.GestureRecognizers>
-                <CheckBox IsChecked="{Binding VeganChecked}">
-                    <CheckBox.GestureRecognizers>
+                <HorizontalStackLayout
+                    Grid.Row="4"
+                    Grid.Column="1"
+                    Margin="0,6,0,0">
+                    <HorizontalStackLayout.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding ToggleDietaryCommand}" CommandParameter="{Binding DietaryStrings[3]}" />
-                    </CheckBox.GestureRecognizers>
-                </CheckBox>
-                <Label Text="{Binding DietaryStrings[3]}" />
-            </HorizontalStackLayout>
+                    </HorizontalStackLayout.GestureRecognizers>
+                    <CheckBox IsChecked="{Binding VeganChecked}">
+                        <CheckBox.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding ToggleDietaryCommand}" CommandParameter="{Binding DietaryStrings[3]}" />
+                        </CheckBox.GestureRecognizers>
+                    </CheckBox>
+                    <Label Text="{Binding DietaryStrings[3]}" />
+                </HorizontalStackLayout>
 
-            <HorizontalStackLayout
-                Grid.Row="5"
-                Grid.Column="1"
-                Margin="0,6,0,0">
-                <HorizontalStackLayout.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding ToggleDietaryCommand}" CommandParameter="{Binding DietaryStrings[4]}" />
-                </HorizontalStackLayout.GestureRecognizers>
-                <CheckBox IsChecked="{Binding VegetarianChecked}">
-                    <CheckBox.GestureRecognizers>
+                <HorizontalStackLayout
+                    Grid.Row="5"
+                    Grid.Column="1"
+                    Margin="0,6,0,0">
+                    <HorizontalStackLayout.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding ToggleDietaryCommand}" CommandParameter="{Binding DietaryStrings[4]}" />
-                    </CheckBox.GestureRecognizers>
-                </CheckBox>
-                <Label Text="{Binding DietaryStrings[4]}" />
+                    </HorizontalStackLayout.GestureRecognizers>
+                    <CheckBox IsChecked="{Binding VegetarianChecked}">
+                        <CheckBox.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding ToggleDietaryCommand}" CommandParameter="{Binding DietaryStrings[4]}" />
+                        </CheckBox.GestureRecognizers>
+                    </CheckBox>
+                    <Label Text="{Binding DietaryStrings[4]}" />
+                </HorizontalStackLayout>
+            </Grid>
+            <Label HorizontalOptions="Center" Text="Food List Search Options" />
+            <HorizontalStackLayout Margin="0,10,0,0" HorizontalOptions="Center">
+                <Label Text="Adjust food list amounts when making recipes" VerticalOptions="Center" />
+                <Switch
+                    IsToggled="{Binding UserPrefs.SubtractFoods}"
+                    OnColor="Green"
+                    ThumbColor="MediumSlateBlue"
+                    VerticalOptions="Center">
+                    <Switch.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding ToggleSubtractFoodsCommand}" />
+                    </Switch.GestureRecognizers>
+                </Switch>
             </HorizontalStackLayout>
-        </Grid>
-        <Label HorizontalOptions="Center" Text="Food List Search Options" />
-        <Label HorizontalOptions="Center" Text="Food Tracking Options" />
-        <HorizontalStackLayout Margin="0,10,0,0" HorizontalOptions="Center">
-            <Label
-                Text="Infinite Spices"
-                VerticalOptions="Center"
-                WidthRequest="100" />
-            <Switch VerticalOptions="Center"
-                                IsToggled="{Binding UserPrefs.InfiniteSpices}"
-                                OnColor="Green"
-                                ThumbColor="MediumSlateBlue">
-                <Switch.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding ToggleInfiniteSpicesCommand}" />
-                </Switch.GestureRecognizers>
-            </Switch>
-        </HorizontalStackLayout>
-    </VerticalStackLayout>
+            <HorizontalStackLayout Margin="0,10,0,0" HorizontalOptions="Center">
+                <Label Text="Include foods you'd need to restock?" VerticalOptions="Center" />
+                <Switch
+                    IsToggled="{Binding UserPrefs.Restock}"
+                    OnColor="Green"
+                    ThumbColor="MediumSlateBlue"
+                    VerticalOptions="Center">
+                    <Switch.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding ToggleRestockCommand}" />
+                    </Switch.GestureRecognizers>
+                </Switch>
+            </HorizontalStackLayout>
+            <HorizontalStackLayout Margin="0,10,0,0" HorizontalOptions="Center">
+                <Label Text="Allow foods not in the food list" VerticalOptions="Center" />
+                <Switch
+                    IsToggled="{Binding UserPrefs.GroceryTrip}"
+                    OnColor="Green"
+                    ThumbColor="MediumSlateBlue"
+                    VerticalOptions="Center">
+                    <Switch.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding ToggleGroceryTripCommand}" />
+                    </Switch.GestureRecognizers>
+                </Switch>
+            </HorizontalStackLayout>
+            <HorizontalStackLayout
+                Margin="0,10,0,0"
+                HorizontalOptions="Center"
+                IsVisible="{Binding UserPrefs.GroceryTrip}">
+                <Label Text="How many?" VerticalOptions="Center" />
+                <Entry
+                    Margin="5,0,0,0"
+                    BackgroundColor="LightGrey"
+                    Focused="ClearValue"
+                    FontSize="30"
+                    HorizontalTextAlignment="Center"
+                    Keyboard="Numeric"
+                    MinimumWidthRequest="120"
+                    Placeholder="{Binding UserPrefs.GTAllowance}"
+                    PlaceholderColor="Black"
+                    Text="{Binding UserPrefs.GTAllowance, Mode=TwoWay, StringFormat='{}{0:0.###}'}"
+                    TextColor="Black" />
+            </HorizontalStackLayout>
+            <Label HorizontalOptions="Center" Text="Food Tracking Options" />
+            <HorizontalStackLayout Margin="0,10,0,0" HorizontalOptions="Center">
+                <Label Text="Infinite Spices" VerticalOptions="Center" />
+                <Switch
+                    IsToggled="{Binding UserPrefs.InfiniteSpices}"
+                    OnColor="Green"
+                    ThumbColor="MediumSlateBlue"
+                    VerticalOptions="Center">
+                    <Switch.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding ToggleInfiniteSpicesCommand}" />
+                    </Switch.GestureRecognizers>
+                </Switch>
+            </HorizontalStackLayout>
+            <HorizontalStackLayout Margin="0,10,0,0" HorizontalOptions="Center">
+                <Label Text="Track Expiration Dates" VerticalOptions="Center" />
+                <Switch
+                    IsToggled="{Binding UserPrefs.TrackingExpirationDates}"
+                    OnColor="Green"
+                    ThumbColor="MediumSlateBlue"
+                    VerticalOptions="Center">
+                    <Switch.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding ToggleExpirationDatesCommand}" />
+                    </Switch.GestureRecognizers>
+                </Switch>
+            </HorizontalStackLayout>
+            <HorizontalStackLayout Margin="0,10,0,0" HorizontalOptions="Center">
+                <Label Text="Low Food Notifications" VerticalOptions="Center" />
+                <Switch
+                    IsToggled="{Binding UserPrefs.Notifications}"
+                    OnColor="Green"
+                    ThumbColor="MediumSlateBlue"
+                    VerticalOptions="Center">
+                    <Switch.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding ToggleNotificationsCommand}" />
+                    </Switch.GestureRecognizers>
+                </Switch>
+            </HorizontalStackLayout>
+            <Grid
+                ColumnDefinitions=".4*, .3*, .3*"
+                IsVisible="{Binding UserPrefs.Notifications}"
+                RowDefinitions="*,*,*">
+                <Label
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="3"
+                    Text="How low?" />
+                <!--  Low Weight Notification setting  -->
+                <Label
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    Text="Weight:" />
+                <HorizontalStackLayout
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    Grid.ColumnSpan="2">
+                    <Entry
+                        Margin="5,0,0,0"
+                        BackgroundColor="LightGrey"
+                        Focused="ClearValue"
+                        FontSize="30"
+                        HorizontalTextAlignment="Center"
+                        Keyboard="Numeric"
+                        MinimumWidthRequest="120"
+                        Placeholder="{Binding UserPrefs.LowWeightNotificationThreshold}"
+                        PlaceholderColor="Black"
+                        Text="{Binding UserPrefs.LowWeightNotificationThreshold, Mode=TwoWay, StringFormat='{}{0:0.###}'}"
+                        TextChanged="QuantityUpdated"
+                        TextColor="Black" />
+                    <Picker
+                        Title="{Binding UserPrefs.LowWeightUnit}"
+                        Margin="10,0,0,0"
+                        ItemsSource="{Binding UserPrefs.MassUnits}"
+                        SelectedIndex="{Binding UserPrefs.LowWeightIndex, Mode=OneWay}"
+                        SelectedIndexChanged="WeightUnitsChanged"
+                        TitleColor="Black"
+                        VerticalOptions="Center" />
+                    <!--<Entry
+                    Margin="5,0,0,0"
+                    BackgroundColor="LightGrey"
+                    FontSize="30"
+                    HorizontalTextAlignment="Center"
+                    Keyboard="Numeric"
+                    MinimumWidthRequest="120"
+                    Placeholder="{Binding UserPrefs.LowWeightNotificationThreshold}"
+                    PlaceholderColor="Black"
+                    Text="{Binding UserPrefs.LowWeightNotificationThreshold, Mode=TwoWay, StringFormat='{}{0:0.###}'}"
+                    TextColor="Black" />
+                <Picker
+                    Title="{Binding UserPrefs.LowWeightUnit}"
+                    TitleColor="Black"
+                    Margin="10,0,0,0"
+                    ItemsSource="{Binding UserPrefs.MassUnits}"
+                    SelectedIndex="{Binding UserPrefs.LowWeightIndex, Mode=OneWay}"
+                    VerticalOptions="Center" />-->
+                </HorizontalStackLayout>
+                <!--  Low Volume Notification setting  -->
+                <Label
+                    Grid.Row="2"
+                    Grid.Column="0"
+                    Text="Volume:" />
+                <HorizontalStackLayout
+                    Grid.Row="2"
+                    Grid.Column="1"
+                    Grid.ColumnSpan="2">
+                    <Entry
+                        Margin="5,0,0,0"
+                        BackgroundColor="LightGrey"
+                        Focused="ClearValue"
+                        FontSize="30"
+                        HorizontalTextAlignment="Center"
+                        Keyboard="Numeric"
+                        MinimumWidthRequest="120"
+                        Placeholder="{Binding UserPrefs.LowVolumeNotificationThreshold}"
+                        PlaceholderColor="Black"
+                        Text="{Binding UserPrefs.LowVolumeNotificationThreshold, Mode=TwoWay, StringFormat='{}{0:0.###}'}"
+                        TextColor="Black" />
+                    <Picker
+                        Title="{Binding UserPrefs.LowVolumeUnit}"
+                        Margin="10,0,0,0"
+                        ItemsSource="{Binding UserPrefs.VolumeUnits}"
+                        SelectedIndex="{Binding UserPrefs.LowVolumeIndex, Mode=OneWay}"
+                        SelectedIndexChanged="VolumeUnitsChanged"
+                        TitleColor="Black"
+                        VerticalOptions="Center" />
+                    <!--<Picker
+                    Title="{Binding UserPrefs.LowVolumeUnit}"
+                    Margin="10,0,0,0"
+                    ItemsSource="{Binding UserPrefs.VolumeUnits, Mode=TwoWay}"
+                    SelectedIndex="{Binding UserPrefs.LowVolumeIndex, Mode=OneWay}"
+                    TitleColor="Black"
+                    VerticalOptions="Center" />-->
+                </HorizontalStackLayout>
+            </Grid>
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>

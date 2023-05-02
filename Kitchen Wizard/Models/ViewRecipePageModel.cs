@@ -110,7 +110,7 @@ namespace Kitchen_Wizard.Models
             }
             else
             {
-                Recipe.HistoryDate = DateTime.Now;
+                Recipe.HistoryDate = DateTime.Today;
                 FavoritesHistoryDBHelper.AddHistory(Recipe);
                 Recipe.IsHistory = true;
                 HistoryButtonText = $"Made on\n {Recipe.HistoryDate.ToString("MM/dd/yyyy")}";

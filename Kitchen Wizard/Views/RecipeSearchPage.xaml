@@ -20,14 +20,13 @@
         Padding="10"
         ColumnDefinitions=".75*, .25*"
         ColumnSpacing="10"
-        RowDefinitions="Auto, *"
+        RowDefinitions="Auto, Auto, *"
         RowSpacing="10">
         <Entry
             x:Name="SearchField"
             Grid.Row="0"
-            Placeholder="Click here to search"
+            Placeholder="Enter a recipe you want to cook"
             Text="{Binding SearchField}" />
-
         <Button
             Grid.Row="0"
             Grid.Column="1"
@@ -36,6 +35,16 @@
             IsEnabled="{Binding NotLoadingData}"
             Text="Search" />
 
+        <Button
+            Grid.Row="1"
+            Grid.Column="0"
+            Grid.ColumnSpan="2"
+            Command="{Binding FoodListSearchCommand}"
+            HeightRequest="50"
+            IsEnabled="{Binding NotLoadingData}"
+            MaximumHeightRequest="50"
+            Text="Search by Food List"
+            VerticalOptions="Start" />
         <!--  Display search results  -->
         <CollectionView
             x:Name="SearchResults"

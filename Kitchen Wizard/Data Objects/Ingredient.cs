@@ -9,7 +9,7 @@ namespace Kitchen_Wizard.Data_Objects
 {
     public partial class Ingredient : Food
     {
-        [ObservableProperty]
-        double quantityValue;
+
+
     }
 }

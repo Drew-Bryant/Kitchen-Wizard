@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.Input;
 using Kitchen_Wizard.Data_Objects;
 using Kitchen_Wizard.Data_Objects.Database_Helpers;
 using Kitchen_Wizard.Data_Objects.Interfaces;
+using Plugin.LocalNotification;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -25,8 +26,10 @@ namespace Kitchen_Wizard.Models
         [ObservableProperty]
         string searchField;
 
+        [ObservableProperty]
+        string expirationTrackingPlaceholderText = "Expiration tracking is turned off\nfor this item";
+
         private ISearchHelper searchHelper;
-        private IUserPreferences prefsHelper;
         public FoodListPageModel(ISearchHelper _searchHelper)
         {
             searchHelper = _searchHelper;
@@ -49,14 +52,19 @@ namespace Kitchen_Wizard.Models
                     item.Unlimited = true;
                 }
             }
-
-
             Debug.WriteLine("Finished loading food list\n");
         }
 
 
         public void AddFood(FoodListItem food)
         {
+            food.ExpirationDate = DateTime.Today;
+
+            if(userPrefs.TrackingExpirationDates)
+            {
+                food.TrackingExpiration = true;
+            }
+
             FoodListDBHelper.Add(food);
             if(FoodList.Select(x => x.ID == food.ID).Count() < 1)
             {
@@ -70,11 +78,42 @@ namespace Kitchen_Wizard.Models
             FoodList.Clear();
             FoodListDBHelper.ClearFoodList();
         }
+
+        public void UpdateExpirationDate(FoodListItem food)
+        {
+            food.ExpirationDate = DateTime.Today + food.ExpirationDateVisible;
+            if (food.ExpirationDate < DateTime.Today)
+            {
+                food.Expired = true;
+            }
+            else
+            {
+                food.Expired = false;
+            }
+            FoodListDBHelper.Save(food);
+        }
+
+        [RelayCommand]
+        public void ToggleExpirationTracking(FoodListItem food)
+        {
+            food.TrackingExpiration = !food.TrackingExpiration;
+
+            //if (food.ExpirationDate == null)
+            //{
+            //    food.ExpirationDate = DateTime.Today;
+            //}
+            FoodListDBHelper.Save(food);
+        }
+
+
+
         [RelayCommand]
         public void DeleteFood(FoodListItem food)
         {
             FoodList.Remove(food);
             FoodListDBHelper.Delete(food);
+
+            LocalNotificationCenter.Current.Cancel(food.ID);
         }
 
         [RelayCommand]
@@ -148,7 +187,6 @@ namespace Kitchen_Wizard.Models
                     return;
                 }
             }
-
         }
     }
 }

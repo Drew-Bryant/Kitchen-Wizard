@@ -8,12 +8,14 @@ namespace Kitchen_Wizard.Views;
 public partial class FoodListPage : ContentPage
 {
 	private FoodListPageModel model;
+
+	bool pageLoading = false;
 	public FoodListPage(FoodListPageModel viewModel)
 	{
-		InitializeComponent();
+        BindingContext = viewModel;
+        InitializeComponent();
 
 		model = viewModel;
-		BindingContext = viewModel;
 		
 	}
 
@@ -22,6 +24,7 @@ public partial class FoodListPage : ContentPage
 		base.OnAppearing();
 
 		model.InitData();
+
 	}
 
 	private async void ClearFoodList(object sender, EventArgs e)
@@ -50,46 +53,33 @@ public partial class FoodListPage : ContentPage
 		//get the item being edited
 		FoodListItem item = ((VisualElement)sender).BindingContext as FoodListItem;
 
-		//get the entry element that was changed
-		Entry sent = sender as Entry;
-
-		/*
-		//don't do anything until the user actually puts a number in
-		if (sent.Text == "" || sent.Text == null || sent.Text == "0" || (sent.Text.Contains("-") && sent.Text.Length == 1)) 
+		if(item == null)
 		{
-            return;
-		}
-
-        if(sent.Text.Contains("-") && sent.Text.Length > 1)
-		{
-			sent.Text = item.QuantityValue.ToString();
 			return;
 		}
-		*/
 
-		
-	if(sent.Text == "" || sent.Text == null || sent.Text.StartsWith("-"))
+		//get the entry element that was changed
+		Entry entry = sender as Entry;
+
+		if(entry.Text == "" || entry.Text == null || entry.Text.StartsWith("-"))
 		{
 			return;
 		}
 
         //parse the text into a value
-        double value = double.Parse(sent.Text);
+        double value = double.Parse(entry.Text);
 
 
-		//if the value isn't negative, update the item and save it
-		//otherwise just reset the entered value back to its previous value
-		if(value >= 0)
-		{
-			item.QuantityValue = value;
+		item.QuantityValue = value;
+        FoodListDBHelper.UpdateNotificationStatus(item);
 
-			FoodListDBHelper.Save(item);
-		}
+        FoodListDBHelper.Save(item);
 		
 	}
 
 	private void UnitsChanged(object sender, EventArgs e)
 	{
+
         FoodListItem item = ((VisualElement)sender).BindingContext as FoodListItem;
 		if(item == null)
 		{
@@ -100,9 +90,7 @@ public partial class FoodListPage : ContentPage
         if (picker.SelectedIndex != item.UnitIndex)
         {
 			Unit unit = (Unit)picker.SelectedItem;
-			//Unit unit;
-			//Enum.TryParse(itemstring, out unit);
-            item.ConvertTo(unit);
+            //item.ConvertTo(unit);
 			item.Units = unit;
 			item.UnitIndex = picker.SelectedIndex;
 			FoodListDBHelper.Save(item);
@@ -114,6 +102,22 @@ public partial class FoodListPage : ContentPage
 		Entry entry = sender as Entry;
 
 		entry.Text = "";
+	}
+
+	private void ExpirationDateChanged(object sender, DateChangedEventArgs e)
+	{
+		FoodListItem item = (sender as VisualElement).BindingContext as FoodListItem;
+
+        //For some reason all the xaml.cs functions run on page appearing
+        //causing null values to be passed into functions because
+        //the model hasn't been set yet
+        if (item == null)
+		{
+			return;
+		}
+
+
+		model.UpdateExpirationDate(item);
 	}
 
 	//private void SwitchToggled(object sender, ToggledEventArgs e)

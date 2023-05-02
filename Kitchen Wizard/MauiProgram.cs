@@ -5,6 +5,7 @@ using Kitchen_Wizard.Data_Objects.Static_Helpers;
 using Kitchen_Wizard.Models;
 using Kitchen_Wizard.Views;
 using Kitchen_Wizard.Views.Embedded_Views;
+using Plugin.LocalNotification;
 using Sharpnado.Tabs;
 
 namespace Kitchen_Wizard;
@@ -16,6 +17,7 @@ public static class MauiProgram
 		var builder = MauiApp.CreateBuilder();
 		builder
 			.UseMauiApp<App>()
+            .UseLocalNotification()
 			.ConfigureFonts(fonts =>
 			{
 				fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
@@ -39,6 +41,7 @@ public static class MauiProgram
         builder.Services.AddTransient<FoodListPage>();
         builder.Services.AddTransient<DatabaseManagement>();
         builder.Services.AddTransient<SettingsPage>();
+        builder.Services.AddTransient<MainPage>();
 
         //embedded views
         builder.Services.AddTransient<FavoritesTab>();

@@ -1,22 +1,21 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Kitchen_Wizard.Views.MainPage"
-             Title="Kitchen Wizard">
+<ContentPage
+    x:Class="Kitchen_Wizard.Views.MainPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="Kitchen Wizard">
     <VerticalStackLayout>
-        <Label 
-            Text="Welcome to Kitchen Wizard!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center"
-            FontSize="20"/>
+        <Image Source="Resources/Images/kitchen_wizard_logo.png" />
         <Label
-            Text="Click the menu icon to get started!"
-            VerticalOptions="Center" 
+            FontSize="20"
             HorizontalOptions="Center"
-            FontSize="20"/>
+            
+            Text="Click the menu icon to get started!"
+            VerticalOptions="Center" />
+        <!--Might add buttons back later idk-->
         <!--<Button
             Text="Favorites and History"
             Clicked="GoToFavoritesHistory"/>-->
-        
+
     </VerticalStackLayout>
 </ContentPage>

@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using Kitchen_Wizard.Data_Objects.Database_Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,24 +16,44 @@ namespace Kitchen_Wizard.Data_Objects
         [ObservableProperty]
         double quantityValue;
 
+        partial void OnQuantityValueChanged(double value)
+        {
+            if (FoodListDBHelper.LoadFoodListIDs().Contains(this.ID))
+            {
+                FoodListDBHelper.Save(this);
+            }
+        }
+
+        [ObservableProperty]
+        [NotifyPropertyChangedFor(nameof(NotExpired))]
+        [NotifyPropertyChangedFor(nameof(ExpiryLabelVisible))]
+        bool expired;
+
+        public bool NotExpired => !Expired;
+
+        public bool ExpiryLabelVisible => !Expired && TrackingExpiration;
         [ObservableProperty]
         bool unlimited;
-        public DateTime ExpirationDate { get; set; }
 
-        public void ConvertTo(Unit units)
-        {
+        [ObservableProperty]
+        [NotifyPropertyChangedFor(nameof(NotTrackingExpiration))]
+        [NotifyPropertyChangedFor(nameof (ExpiryLabelVisible))]
+        bool trackingExpiration;
 
-            if (!MyUnits.Contains(units))
-            {
-                return;
-            }
 
-            //get conversion factor and multiply by it
-            QuantityValue = QuantityValue * base.GetConversionFactor(Units, units);
+        public bool NotTrackingExpiration => !TrackingExpiration;
 
-            //update units to reflect new unit
-            Units = units;
+        [ObservableProperty]
+        public DateTime expirationDate;
 
-        }
+        [ObservableProperty]
+        public TimeSpan expirationDateVisible;
+
+        //partial void OnExpirationDateChanged(DateTime value)
+        //{
+        //    FoodListDBHelper.Save(this);
+        //}
+
+
     }
 }

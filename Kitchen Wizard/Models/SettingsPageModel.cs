@@ -15,6 +15,9 @@ namespace Kitchen_Wizard.Models
         [ObservableProperty]
         UserPreferences userPrefs = new();
 
+        [ObservableProperty]
+        string searchOptionButtonText = "Show";
+
         //for managing options checkboxes
         [ObservableProperty]
         bool anyChecked = false;
@@ -71,8 +74,7 @@ namespace Kitchen_Wizard.Models
 
             foreach (var option in UserPrefs.Cuisine)
             {
-                CuisineType value;
-                Enum.TryParse<CuisineType>(option, out value);
+                CuisineType value = ConversionService.StringToCuisineTypeEnum(option);
                 switch (value)
                 {
                     case CuisineType.Any:
@@ -99,8 +101,8 @@ namespace Kitchen_Wizard.Models
 
             foreach (var option in UserPrefs.Dietary)
             {
-                DietaryRestrictions value;
-                Enum.TryParse<DietaryRestrictions>(option, out value);
+                DietaryRestrictions value = ConversionService.StringToDietaryRestrictionsEnum(option);
+
                 switch (value)
                 {
                     case DietaryRestrictions.None:
@@ -130,6 +132,40 @@ namespace Kitchen_Wizard.Models
             prefsHelper.Save(UserPrefs);
         }
         [RelayCommand]
+        public void ToggleSubtractFoods()
+        {
+            UserPrefs.SubtractFoods = !UserPrefs.SubtractFoods;
+            prefsHelper.Save(UserPrefs);
+        }
+        [RelayCommand]
+        public void ToggleExpirationDates()
+        {
+            UserPrefs.TrackingExpirationDates = !UserPrefs.TrackingExpirationDates;
+            prefsHelper.Save(UserPrefs);
+        }
+
+        [RelayCommand]
+        public void ToggleNotifications()
+        {
+            UserPrefs.Notifications = !UserPrefs.Notifications;
+            prefsHelper.Save(UserPrefs);
+        }
+
+        [RelayCommand]
+        public void ToggleRestock()
+        {
+            UserPrefs.Restock = !UserPrefs.Restock;
+            prefsHelper.Save(userPrefs);
+        }
+
+        [RelayCommand]
+        public void ToggleGroceryTrip()
+        {
+            UserPrefs.GroceryTrip = !UserPrefs.GroceryTrip;
+            prefsHelper.Save(userPrefs);
+        }
+
+        [RelayCommand]
         public void ToggleCuisine(string name)
         {
             //indicates whether the control was turned on or off
@@ -144,8 +180,7 @@ namespace Kitchen_Wizard.Models
                 selected = true;
             }
 
-            CuisineType value;
-            Enum.TryParse<CuisineType>(name, out value);
+            CuisineType value = ConversionService.StringToCuisineTypeEnum(name);
 
             switch (value)
             {
@@ -232,8 +267,7 @@ namespace Kitchen_Wizard.Models
                 selected = true;
             }
 
-            DietaryRestrictions value;
-            Enum.TryParse<DietaryRestrictions>(name, out value);
+            DietaryRestrictions value = ConversionService.StringToDietaryRestrictionsEnum(name);
             switch (value)
             {
                 case DietaryRestrictions.None:

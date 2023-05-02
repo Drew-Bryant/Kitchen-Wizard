@@ -17,7 +17,41 @@ namespace Kitchen_Wizard.Data_Objects.Static_Helpers
         //Including parsing strings of steps and ingredients into lists
         public RecipeClass GetFullByID(int recipeID)
         {
+
             RecipeClass recipe = new();
+
+            //make a recipe specific for testing food list searching
+            if (recipeID == 4)
+            {
+                recipe.Name = "Mushroom, spinach, and Swiss Omelette";
+                recipe.ID = recipeID;
+                recipe.Description = "A delicious vegetarian omelette";
+                recipe.Steps = new List<string>() { "Steps go here"};
+
+                string ingredientString = "1 Cup Spinach,1/2 cup Mushrooms,2 tbsp Olive_Oil,3 oz Eggs,6 oz Swiss_Cheese";
+                recipe.Ingredients = ParseAllIngredients(ingredientString);
+                recipe.Author = "Drew Bryant";
+
+                recipe.Source = $"www.DrewsAmazingRecipes.com/recipe/{recipe.ID}";
+
+                recipe.Servings = 1;
+
+                recipe.IsFavorite = FavoritesHistoryDBHelper.IsFavorite(recipe.ID);
+                recipe.IsHistory = FavoritesHistoryDBHelper.IsHistory(recipe.ID);
+
+                recipe.Cuisine = CuisineType.American;
+
+                recipe.Dietary = new();
+
+                List<DietaryRestrictions> restrictions2 = new() { DietaryRestrictions.Keto, DietaryRestrictions.Vegetarian, DietaryRestrictions.Gluten_Free };
+                recipe.Dietary.AddRange(restrictions2);
+
+                return recipe;
+
+
+            }
+
+
             recipe.Name = $"Recipe number {recipeID}";
             recipe.ID = recipeID;
             recipe.Description = "This is the description for the recipe";
@@ -38,7 +72,7 @@ namespace Kitchen_Wizard.Data_Objects.Static_Helpers
             recipe.Author = "Drew Bryant";
             recipe.Source = $"www.DrewsAmazingRecipes.com/recipe/{recipe.ID}";
 
-            recipe.Servings = 4;
+            recipe.Servings = 1;
 
             recipe.IsFavorite = FavoritesHistoryDBHelper.IsFavorite(recipe.ID);
             recipe.IsHistory = FavoritesHistoryDBHelper.IsHistory(recipe.ID);
@@ -113,10 +147,11 @@ namespace Kitchen_Wizard.Data_Objects.Static_Helpers
             //convert the unit from string to enum type and assign it
             //TryParse should never fail if the database is populated correctly
             Unit unit;
-            if (Enum.TryParse<Unit>(ingredientParts[1], out unit) == false)
+            if (Enum.TryParse<Unit>(ingredientParts[1].ToLower(), out unit) == false)
             {
                 Debug.WriteLine("Either your database is wrong or the Units enums need another value\n");
             }
+            else
             ingredient.Units = unit;
 
 
@@ -132,6 +167,7 @@ namespace Kitchen_Wizard.Data_Objects.Static_Helpers
                     ingredient.Name += " ";
                 }
             }
+            ingredient.Name.ToLower();
 
             return ingredient;
         }

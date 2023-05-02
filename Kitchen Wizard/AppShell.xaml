@@ -49,7 +49,7 @@
     <FlyoutItem Title="Database Management">
         <ShellContent
             Title="Database Management"
-            IsVisible="False"
+            IsVisible="True"
             ContentTemplate="{DataTemplate views:DatabaseManagement}"
             Route="DatabaseManagement" />
     </FlyoutItem>

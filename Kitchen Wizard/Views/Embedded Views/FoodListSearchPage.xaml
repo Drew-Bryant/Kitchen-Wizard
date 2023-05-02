@@ -7,8 +7,7 @@
     xmlns:viewmodel="clr-namespace:Kitchen_Wizard.Models"
     Title="Search For Foods"
     x:DataType="viewmodel:FoodListPageModel">
-    <VerticalStackLayout>
-        <!--  basically just copy over the search page and repurpose it to show foodlistitems  -->
+    <!--  basically just copy over the search page and repurpose it to show foodlistitems  -->
         <Grid
             Padding="10"
             ColumnDefinitions=".75*, .25*"
@@ -28,11 +27,10 @@
                 CommandParameter="{Binding SearchField}"
                 IsEnabled="{Binding NotLoadingData}"
                 Text="Search" />
-
             <!--  Display search results  -->
             <CollectionView
                 x:Name="SearchResults"
-                Grid.Row="2"
+                Grid.Row="1"
                 Grid.ColumnSpan="2"
                 Margin="20"
                 EmptyView=""
@@ -56,18 +54,15 @@
 
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="{x:Type object:FoodListItem}">
-                        <Grid>
-                            <Frame>
-                                <Frame.GestureRecognizers>
-                                    <TapGestureRecognizer Tapped="SearchResultTapped" />
-                                </Frame.GestureRecognizers>
-                                <Label FontSize="12" Text="{Binding Name}" />
-                            </Frame>
-                        </Grid>
+                        <Frame>
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="SearchResultTapped" />
+                            </Frame.GestureRecognizers>
+                            <Label FontSize="12" Text="{Binding Name}" />
+                        </Frame>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
-
             <ActivityIndicator
                 Grid.RowSpan="2"
                 Grid.ColumnSpan="2"
@@ -76,5 +71,4 @@
                 IsVisible="{Binding LoadingData}"
                 VerticalOptions="CenterAndExpand" />
         </Grid>
-    </VerticalStackLayout>
 </ContentPage>

@@ -149,7 +149,7 @@ namespace Kitchen_Wizard.Models
             }
         }
         [RelayCommand]
-        void KeywordSearch(string keyword)
+        public void KeywordSearch(string keyword)
         {
             SearchResults.Clear();
             //do the search here
@@ -160,6 +160,18 @@ namespace Kitchen_Wizard.Models
             {
                 SearchResults.Add(recipe);
             }
+        }
+
+        [RelayCommand]
+        public void FoodListSearch()
+        {
+            SearchResults.Clear();
+            var results = searchHelper.SearchRecipeByFoodList(SearchOptions);
+
+            foreach(var recipe in results)
+            {
+                SearchResults.Add(recipe);
+            }    
         }
 
         [RelayCommand]
